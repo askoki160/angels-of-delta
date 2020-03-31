@@ -1,0 +1,75 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://assets/images/set1_background.png" type="Texture" id=1]
+[ext_resource path="res://Player.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Player.gd" type="Script" id=3]
+[ext_resource path="res://MainScene.gd" type="Script" id=4]
+[ext_resource path="res://StartField.gd" type="Script" id=5]
+
+[sub_resource type="TileSet" id=1]
+0/name = "set1_background.png 0"
+0/texture = ExtResource( 1 )
+0/tex_offset = Vector2( 0, 0 )
+0/modulate = Color( 1, 1, 1, 1 )
+0/region = Rect2( 0, 0, 128, 128 )
+0/tile_mode = 0
+0/occluder_offset = Vector2( 0, 0 )
+0/navigation_offset = Vector2( 0, 0 )
+0/shape_offset = Vector2( 0, 0 )
+0/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+0/shape_one_way = false
+0/shape_one_way_margin = 0.0
+0/shapes = [  ]
+0/z_index = 0
+
+[sub_resource type="RectangleShape2D" id=2]
+extents = Vector2( 30.1685, 36.3926 )
+
+[node name="RootNode" type="Node2D"]
+script = ExtResource( 4 )
+
+[node name="TileMap" type="TileMap" parent="."]
+tile_set = SubResource( 1 )
+format = 1
+tile_data = PoolIntArray( 0, 0, 0, 2, 0, 0, 4, 0, 0, 6, 0, 0, 8, 0, 0, 10, 0, 0, 12, 0, 0, 14, 0, 0, 131072, 0, 0, 131086, 0, 0, 262144, 0, 0, 262158, 0, 0, 393216, 0, 0, 393230, 0, 0, 524288, 0, 0, 524290, 0, 0, 524292, 0, 0, 524294, 0, 0, 524296, 0, 0, 524298, 0, 0, 524300, 0, 0, 524302, 0, 0 )
+
+[node name="Player" parent="TileMap" instance=ExtResource( 2 )]
+position = Vector2( 62.0842, 66.0763 )
+script = ExtResource( 3 )
+
+[node name="StartField" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StartField"]
+position = Vector2( 56.2039, -6.37127 )
+shape = SubResource( 2 )
+script = ExtResource( 5 )
+
+[node name="Field2" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Field2"]
+position = Vector2( 191.283, 64.1196 )
+shape = SubResource( 2 )
+
+[node name="Field3" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Field3"]
+position = Vector2( 993.184, 69.647 )
+shape = SubResource( 2 )
+
+[node name="Field4" type="Area2D" parent="."]
+
+[node name="Shape4" type="CollisionShape2D" parent="Field4"]
+position = Vector2( 965.654, 623.895 )
+shape = SubResource( 2 )
+
+[node name="Field5" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Field5"]
+position = Vector2( 30.5062, 579.046 )
+shape = SubResource( 2 )
+[connection signal="body_entered" from="StartField" to="TileMap/Player" method="_on_StartField_body_entered"]
+[connection signal="body_exited" from="Field2" to="TileMap/Player" method="_on_Field2_body_exited"]
+[connection signal="body_shape_entered" from="Field3" to="TileMap/Player" method="_on_Field3_body_shape_entered"]
+[connection signal="body_entered" from="Field4" to="TileMap/Player" method="_on_Field4_body_entered"]
+[connection signal="body_exited" from="Field4" to="TileMap/Player" method="_on_Field4_body_exited"]
+[connection signal="body_entered" from="Field5" to="TileMap/Player" method="_on_Field5_body_entered"]
