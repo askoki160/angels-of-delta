@@ -4,7 +4,6 @@
 [ext_resource path="res://Player.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Player.gd" type="Script" id=3]
 [ext_resource path="res://MainScene.gd" type="Script" id=4]
-[ext_resource path="res://StartField.gd" type="Script" id=5]
 
 [sub_resource type="TileSet" id=1]
 0/name = "set1_background.png 0"
@@ -25,6 +24,25 @@
 [sub_resource type="RectangleShape2D" id=2]
 extents = Vector2( 30.1685, 36.3926 )
 
+[sub_resource type="GDScript" id=3]
+script/source = "extends CollisionShape2D
+
+
+# Declare member variables here. Examples:
+# var a = 2
+# var b = \"text\"
+
+
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	pass # Replace with function body.
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+#func _process(delta):
+#	pass
+"
+
 [node name="RootNode" type="Node2D"]
 script = ExtResource( 4 )
 
@@ -42,7 +60,7 @@ script = ExtResource( 3 )
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StartField"]
 position = Vector2( 56.2039, -6.37127 )
 shape = SubResource( 2 )
-script = ExtResource( 5 )
+script = SubResource( 3 )
 
 [node name="Field2" type="Area2D" parent="."]
 
@@ -67,9 +85,19 @@ shape = SubResource( 2 )
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Field5"]
 position = Vector2( 30.5062, 579.046 )
 shape = SubResource( 2 )
+
+[node name="Label" type="Label" parent="."]
+margin_left = 274.482
+margin_top = 281.886
+margin_right = 763.482
+margin_bottom = 360.886
+__meta__ = {
+"_edit_use_anchors_": false
+}
 [connection signal="body_entered" from="StartField" to="TileMap/Player" method="_on_StartField_body_entered"]
 [connection signal="body_exited" from="Field2" to="TileMap/Player" method="_on_Field2_body_exited"]
 [connection signal="body_shape_entered" from="Field3" to="TileMap/Player" method="_on_Field3_body_shape_entered"]
 [connection signal="body_entered" from="Field4" to="TileMap/Player" method="_on_Field4_body_entered"]
 [connection signal="body_exited" from="Field4" to="TileMap/Player" method="_on_Field4_body_exited"]
 [connection signal="body_entered" from="Field5" to="TileMap/Player" method="_on_Field5_body_entered"]
+[connection signal="ready" from="Label" to="." method="_on_Label_ready"]

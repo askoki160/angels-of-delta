@@ -1,7 +1,7 @@
 extends KinematicBody2D
 
 # TODO: dice generator which connects to the player object
-var dice_number = 6
+var dice_number = 2
 
 var speedHorizontal = 200
 var speedVertical = 0
