@@ -7,6 +7,7 @@ func _ready():
 	pass # Replace with function body.
 
 
+# start game
 func _on_Button_pressed():
 	Global.goto_scene("res://MainScene.tscn")
 

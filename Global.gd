@@ -1,7 +1,7 @@
 extends Node
 
+# default number of players
 var players = 1
-
 var current_scene = null
 
 func _ready():

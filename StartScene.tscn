@@ -18,9 +18,9 @@ __meta__ = {
 }
 
 [node name="Label" type="Label" parent="."]
-margin_left = 332.377
+margin_left = 356.984
 margin_top = 196.666
-margin_right = 540.377
+margin_right = 564.984
 margin_bottom = 233.666
 text = "Enter number of players:"
 __meta__ = {
@@ -28,10 +28,10 @@ __meta__ = {
 }
 
 [node name="Button" type="Button" parent="."]
-margin_left = 259.623
-margin_top = 326.93
-margin_right = 623.623
-margin_bottom = 396.93
+margin_left = 269.876
+margin_top = 322.829
+margin_right = 633.876
+margin_bottom = 392.829
 text = "Start"
 __meta__ = {
 "_edit_use_anchors_": false
