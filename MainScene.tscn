@@ -51,10 +51,6 @@ tile_set = SubResource( 1 )
 format = 1
 tile_data = PoolIntArray( 0, 0, 0, 2, 0, 0, 4, 0, 0, 6, 0, 0, 8, 0, 0, 10, 0, 0, 12, 0, 0, 14, 0, 0, 131072, 0, 0, 131086, 0, 0, 262144, 0, 0, 262158, 0, 0, 393216, 0, 0, 393230, 0, 0, 524288, 0, 0, 524290, 0, 0, 524292, 0, 0, 524294, 0, 0, 524296, 0, 0, 524298, 0, 0, 524300, 0, 0, 524302, 0, 0 )
 
-[node name="Player" parent="TileMap" instance=ExtResource( 2 )]
-position = Vector2( 62.0842, 66.0763 )
-script = ExtResource( 3 )
-
 [node name="StartField" type="Area2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StartField"]
@@ -94,10 +90,14 @@ margin_bottom = 360.886
 __meta__ = {
 "_edit_use_anchors_": false
 }
-[connection signal="body_entered" from="StartField" to="TileMap/Player" method="_on_StartField_body_entered"]
-[connection signal="body_exited" from="Field2" to="TileMap/Player" method="_on_Field2_body_exited"]
-[connection signal="body_shape_entered" from="Field3" to="TileMap/Player" method="_on_Field3_body_shape_entered"]
-[connection signal="body_entered" from="Field4" to="TileMap/Player" method="_on_Field4_body_entered"]
-[connection signal="body_exited" from="Field4" to="TileMap/Player" method="_on_Field4_body_exited"]
-[connection signal="body_entered" from="Field5" to="TileMap/Player" method="_on_Field5_body_entered"]
-[connection signal="ready" from="Label" to="." method="_on_Label_ready"]
+
+[node name="Player" parent="." instance=ExtResource( 2 )]
+visible = false
+position = Vector2( 60, 60 )
+script = ExtResource( 3 )
+[connection signal="body_entered" from="StartField" to="Player" method="_on_StartField_body_entered"]
+[connection signal="body_exited" from="Field2" to="Player" method="_on_Field2_body_exited"]
+[connection signal="body_shape_entered" from="Field3" to="Player" method="_on_Field3_body_shape_entered"]
+[connection signal="body_entered" from="Field4" to="Player" method="_on_Field4_body_entered"]
+[connection signal="body_exited" from="Field4" to="Player" method="_on_Field4_body_exited"]
+[connection signal="body_entered" from="Field5" to="Player" method="_on_Field5_body_entered"]
