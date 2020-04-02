@@ -91,4 +91,14 @@ __meta__ = {
 }
 
 [node name="Dice" parent="." instance=ExtResource( 2 )]
-position = Vector2( 198.753, 416.056 )
+position = Vector2( 201.403, 416.056 )
+
+[node name="Label2" type="Label" parent="."]
+margin_left = 575.012
+margin_top = 394.856
+margin_right = 888.012
+margin_bottom = 503.856
+__meta__ = {
+"_edit_use_anchors_": false
+}
+[connection signal="dice_thrown" from="Dice" to="." method="_on_Dice_dice_thrown"]

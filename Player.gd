@@ -14,6 +14,12 @@ var direction = Vector2.DOWN
 # find the node when game starts
 onready var sprite : Sprite = get_node("Sprite")
 
+signal ended_turn
+
+func take_turn():
+	
+	emit_signal("ended_turn") # Once the turn has finished
+
 func _physics_process(delta):
 	velocity.x = speedHorizontal
 	velocity.y = speedVertical
