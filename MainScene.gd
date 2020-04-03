@@ -1,3 +1,4 @@
+class_name Player
 extends Node2D
 
 onready var global_vars = get_node("/root/Global")
@@ -35,6 +36,8 @@ func _ready():
 		player_instance.set_name("player_" + str(i))
 		# hardcoded position
 		player_instance.position = Vector2(10 + x_offset, 60)
+		# connect all field instances
+		player_instance.connect("ended_turn", self, "_on_end_turn")
 		x_offset += 30
 		state.add_player(player_instance)
 		add_child(player_instance)
@@ -42,8 +45,8 @@ func _ready():
 
 func _on_Dice_dice_thrown(dice_number):
 	var current_player = state.get_current_instance()
-	var last_position = current_player.position
-	last_position.x += dice_number * 100
-	current_player.position = last_position
+	current_player.take_turn(dice_number)
+
+func _on_end_turn():
 	state._next_player()
 	$Label2.text = "Current player turn: " + str(state.get_current_index())
