@@ -48,12 +48,12 @@ script = ExtResource( 4 )
 [node name="TileMap" type="TileMap" parent="."]
 tile_set = SubResource( 1 )
 format = 1
-tile_data = PoolIntArray( 0, 0, 0, 2, 0, 0, 4, 0, 0, 6, 0, 0, 8, 0, 0, 10, 0, 0, 12, 0, 0, 14, 0, 0, 131072, 0, 0, 131086, 0, 0, 262144, 0, 0, 262158, 0, 0, 393216, 0, 0, 393230, 0, 0, 524288, 0, 0, 524290, 0, 0, 524292, 0, 0, 524294, 0, 0, 524296, 0, 0, 524298, 0, 0, 524300, 0, 0, 524302, 0, 0 )
+tile_data = PoolIntArray( 0, 0, 0, 2, 0, 0, 4, 0, 0, 6, 0, 0, 8, 0, 0, 10, 0, 0, 12, 0, 0, 14, 0, 0, 65536, 0, 0, 131072, 0, 0, 131086, 0, 0, 262144, 0, 0, 262158, 0, 0, 393216, 0, 0, 393230, 0, 0, 524288, 0, 0, 524290, 0, 0, 524292, 0, 0, 524294, 0, 0, 524296, 0, 0, 524298, 0, 0, 524300, 0, 0, 524302, 0, 0 )
 
 [node name="StartField" type="Area2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StartField"]
-position = Vector2( 56.2039, -6.37127 )
+position = Vector2( 51.6819, -7.87859 )
 shape = SubResource( 2 )
 script = SubResource( 3 )
 
