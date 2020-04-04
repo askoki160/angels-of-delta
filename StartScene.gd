@@ -14,4 +14,3 @@ func _on_Button_pressed():
 
 func _on_SpinBox_value_changed(value):
 	global_vars.players = value
-	global_vars.positions = [0] * value
