@@ -4,6 +4,8 @@ onready var global_vars = get_node("/root/Global/")
 onready var fields = global_vars.fields
 var pos_index = 0
 var init_position_index = 0
+# needed for MoveField depending on dice number
+var last_dice_thrown_number = 0
 
 signal ended_turn
 
@@ -24,14 +26,7 @@ func set_position(board_index):
 	
 func take_turn(dice_number) -> void:
 	var board_index = (self.pos_index + dice_number) % fields.size()
+	if dice_number > 0:
+		self.last_dice_thrown_number = dice_number
 	set_position(board_index)
 	emit_signal("ended_turn") # Once the turn has finished
-
-
-func alert(text: String, title: String='Message') -> void:
-	var dialog = AcceptDialog.new()
-	dialog.dialog_text = text
-	dialog.window_title = title
-	dialog.connect('modal_closed', dialog, 'queue_free')
-	add_child(dialog)
-	dialog.popup_centered()
