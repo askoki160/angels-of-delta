@@ -8,14 +8,9 @@
 
 config_version=4
 
-_global_script_classes=[ {
-"base": "Node2D",
-"class": "Player",
-"language": "GDScript",
-"path": "res://MainScene.gd"
-} ]
+_global_script_classes=[  ]
 _global_script_class_icons={
-"Player": ""
+
 }
 
 [application]
@@ -28,6 +23,7 @@ config/icon="res://icon.png"
 
 Global="*res://Global.gd"
 StartScene="*res://StartScene.tscn"
+Utils="*res://Utils.gd"
 
 [display]
 

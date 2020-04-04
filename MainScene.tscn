@@ -7,13 +7,6 @@
 [node name="RootNode" type="Node2D"]
 script = ExtResource( 4 )
 
-[node name="ColorRect" type="ColorRect" parent="."]
-margin_right = 1120.0
-margin_bottom = 800.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
 [node name="TextureRect" type="TextureRect" parent="."]
 margin_right = 1120.0
 margin_bottom = 800.0
@@ -23,11 +16,11 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Label" type="Label" parent="."]
-margin_left = 274.482
-margin_top = 281.886
-margin_right = 763.482
-margin_bottom = 360.886
+[node name="NumberOfPlayers" type="Label" parent="."]
+margin_left = 274.0
+margin_top = 282.0
+margin_right = 840.0
+margin_bottom = 361.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -35,11 +28,11 @@ __meta__ = {
 [node name="Dice" parent="." instance=ExtResource( 2 )]
 position = Vector2( 201.403, 416.056 )
 
-[node name="Label2" type="Label" parent="."]
-margin_left = 575.012
-margin_top = 394.856
-margin_right = 888.012
-margin_bottom = 503.856
+[node name="CurrentPlayerTurn" type="Label" parent="."]
+margin_left = 579.795
+margin_top = 440.298
+margin_right = 892.795
+margin_bottom = 549.298
 __meta__ = {
 "_edit_use_anchors_": false
 }

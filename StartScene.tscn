@@ -6,10 +6,10 @@
 script = ExtResource( 1 )
 
 [node name="SpinBox" type="SpinBox" parent="."]
-margin_left = 382.245
-margin_top = 251.868
-margin_right = 499.245
-margin_bottom = 292.868
+margin_left = 493.282
+margin_top = 370.697
+margin_right = 610.282
+margin_bottom = 411.697
 min_value = 1.0
 max_value = 10.0
 value = 1.0
@@ -18,20 +18,20 @@ __meta__ = {
 }
 
 [node name="Label" type="Label" parent="."]
-margin_left = 356.984
-margin_top = 196.666
-margin_right = 564.984
-margin_bottom = 233.666
+margin_left = 466.104
+margin_top = 295.896
+margin_right = 625.104
+margin_bottom = 332.896
 text = "Enter number of players:"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Button" type="Button" parent="."]
-margin_left = 269.876
-margin_top = 322.829
-margin_right = 633.876
-margin_bottom = 392.829
+margin_left = 371.173
+margin_top = 503.995
+margin_right = 735.173
+margin_bottom = 573.995
 text = "Start"
 __meta__ = {
 "_edit_use_anchors_": false
