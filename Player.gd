@@ -30,7 +30,7 @@ func take_turn(dice_number) -> void:
 	var fields = global_vars.fields
 	fields[self.pos_index]['occupied'] -= 1
 	
-	self.pos_index = (self.pos_index + dice_number) % 32
+	self.pos_index = (self.pos_index + dice_number) % fields.size()
 	var field_pos = fields[self.pos_index]['location']
 	var occupied = fields[self.pos_index]['occupied']
 	

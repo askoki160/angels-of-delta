@@ -29,6 +29,11 @@ config/icon="res://icon.png"
 Global="*res://Global.gd"
 StartScene="*res://StartScene.tscn"
 
+[display]
+
+window/size/width=1120
+window/size/height=800
+
 [global]
 
 pix=false
