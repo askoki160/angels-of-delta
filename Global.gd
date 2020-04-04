@@ -5,6 +5,47 @@ var players = 1
 var current_scene = null
 
 var fields: Array
+var all_field_actions = [
+		[Utils.BaseField.new(tr('Drink one'), tr('Start'))],
+		[Utils.BaseField.new(tr('No one\'s drinking'), tr('Lame'))],
+		[Utils.ChanceField.new(tr('Draw a card'), tr('Chance'))],
+		[Utils.BaseField.new(tr('Drink two with a player opposite from you'), tr('Drink'))],
+		[Utils.BaseField.new(tr('Rock, paper, scissors with the left player'), tr('Play'))],
+		[Utils.BaseField.new(tr('Player opposite from you drinks'), tr('Drink'))],
+		[Utils.BaseField.new(tr('Everyone but you drinks'), tr('Drink'))],
+		[
+			Utils.BaseField.new(tr('Give 5 sips to anyone'), tr('Drink')), 
+			Utils.BaseField.new(tr('Drink 1 and give 3'), tr('Optional'))
+		],
+		[Utils.ChanceField.new(tr('Draw a card'), tr('Chance'))],
+		[Utils.BaseField.new(tr('Only girls drink'), tr('Drink'))],
+		[Utils.MoveField.new(tr('Drink 2 and go 3 steps back'), tr('Back'), -3)],
+		[Utils.BaseField.new(tr('Play odd or even with the player on the left. Who wins drinks!'), tr('Play'))],
+		[Utils.MoveStartField.new(tr('Back to beginning'), tr('Start'))],
+		[Utils.BaseField.new(tr('Choose with whom you drink 2 sips'), tr('Drink'))],
+		[Utils.PlayAgainField.new(tr('Drink 2 and play again'), tr('Drink'))],
+		[Utils.BaseField.new(tr('Only guys drink!'), tr('Drink'))],
+		[Utils.ChanceField.new(tr('Draw a card'), tr('Chance'))],
+		[
+			Utils.BaseField.new(tr('Drink 1 and give 3'), tr('Optional')),
+			Utils.MoveField.new(tr('Go 3 steps back'), tr('Back'), -3)
+		],
+		[Utils.BaseField.new(tr('Everybody drinks'), tr('Drink'))],
+		[Utils.BaseField.new(tr('Person on the left and person on the right of you drink!'), tr('Drink'))],
+		[Utils.BaseField.new(tr('Rock, paper, scissors with the player on the right. Wo wins drinks!'), tr('Play'))],
+		[Utils.BaseField.new(tr('Choose with whoom you drink 2?'), tr('Drink'))],
+		[
+			Utils.BaseField.new(tr('Drink 1 and give 3'), tr('Optional')),
+			Utils.ChanceField.new(tr('Draw a card'), tr('Chance'))
+		],
+		[Utils.ThrowDiceField.new(tr('Throw a dice and drink that many times!'), tr('Drink'))],
+		[Utils.BaseField.new(tr('Sobering time.'), tr('Lame'))],
+		[Utils.MoveField.new(tr('Go back to your previous place'), tr('Back'), 0)],
+		[Utils.BaseField.new(tr('Drink 2 with player closest to start. This applies in both directions.'), tr('Drink'))],
+		[Utils.MoveStartField.new(tr('Back to beginning'), tr('Start'))],
+		[Utils.BaseField.new(tr('Two players closest to start drink!'), tr('Drink'))],
+		[Utils.BaseField.new(tr('Give 10 to whoever you want!'), tr('Drink'))],
+	]
 
 func _ready():
 	var root = get_tree().get_root()
