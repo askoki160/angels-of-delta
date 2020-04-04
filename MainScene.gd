@@ -45,6 +45,7 @@ class Map:
 		var field_dict: Dictionary = {
 			"id": idx,
 			"location": Vector2(pos_x, pos_y),
+			'occupied': 0,
 			# TODO: field actions
 			"actions": null
 		}
