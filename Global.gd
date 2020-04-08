@@ -8,7 +8,10 @@ var fields: Array
 var all_field_actions = [
 		[Utils.BaseField.new(tr('Drink one'), tr('Start'))],
 		[Utils.BaseField.new(tr('No one\'s drinking'), tr('Lame'))],
-		[Utils.ChanceField.new(tr('Draw a card'), tr('Chance'))],
+		[
+			Utils.ChanceField.new(tr('Draw a card'), tr('Chance')),
+			Utils.BaseField.new(tr('Drink 1 and give 3'), tr('Optional'))
+		],
 		[Utils.BaseField.new(tr('Drink two with a player opposite from you'), tr('Drink'))],
 		[Utils.BaseField.new(tr('Rock, paper, scissors with the left player'), tr('Play'))],
 		[Utils.BaseField.new(tr('Player opposite from you drinks'), tr('Drink'))],
@@ -38,9 +41,9 @@ var all_field_actions = [
 			Utils.BaseField.new(tr('Drink 1 and give 3'), tr('Optional')),
 			Utils.ChanceField.new(tr('Draw a card'), tr('Chance'))
 		],
-		[Utils.ThrowDiceField.new(tr('Throw a dice and drink that many times!'), tr('Drink'))],
+		[Utils.ThrowDiceField.new(tr('Drink how much you have thrown'), tr('Drink'))],
 		[Utils.BaseField.new(tr('Sobering time.'), tr('Lame'))],
-		[Utils.MoveField.new(tr('Go back to your previous place'), tr('Back'), 0)],
+		[Utils.MovePreviousPositionField.new(tr('Go back to your previous place'), tr('Back'))],
 		[Utils.BaseField.new(tr('Drink 2 with player closest to start. This applies in both directions.'), tr('Drink'))],
 		[Utils.MoveStartField.new(tr('Back to beginning'), tr('Start'))],
 		[Utils.BaseField.new(tr('Two players closest to start drink!'), tr('Drink'))],

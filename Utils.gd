@@ -28,7 +28,7 @@ class BaseField:
 	var title: String
 	var message: String
 	
-	func _init(_title, _message):
+	func _init(_message, _title):
 		self.title = _title
 		self.message = _message
 		
@@ -39,9 +39,18 @@ class MoveField extends BaseField:
 	var move_number: int
 	export var MoveFieldID: String = 'MoveField'
 	
-	func _init(title, message, _move_number).(title, message):
+	func _init(_message, _title, _move_number).(_message, _title):
 		self.move_number = _move_number
 		
+	func get_id():
+		return MoveFieldID
+		
+class MovePreviousPositionField extends BaseField:
+	export var MoveFieldID: String = 'MovePreviousPositionField'
+
+	func _init(_message, _title).(_message, _title):
+		pass
+
 	func get_id():
 		return MoveFieldID
 
@@ -49,27 +58,25 @@ class MoveStartField extends BaseField:
 	var move_number: int = 0
 	export var MoveStartFieldID: String = 'MoveStartField'
 	
-	func _init(title, message).(title, message):
+	func _init(_message, _title).(_message, _title):
 		pass
 		
 	func get_id():
 		return MoveStartFieldID
 
 class ThrowDiceField extends BaseField:
-	# TODO: implement logic for this
 	export var ThrowDiceFieldID: String = 'ThrowDiceField'
 
-	func _init(title, message).(title, message):
+	func _init(_message, _title).(_message, _title):
 		pass
 		
 	func get_id():
 		return ThrowDiceFieldID
 
 class PlayAgainField extends BaseField:
-	# TODO: implement logic for this
 	export var PlayAgainFieldID: String = 'PlayAgainField'
 
-	func _init(title, message).(title, message):
+	func _init(_message, _title).(_message, _title):
 		pass
 	
 	func get_id():
@@ -79,7 +86,7 @@ class ChanceField extends BaseField:
 	# TODO: implement random draw of chance from the pile
 	export var ChanceFieldID: String = 'ChanceField'
 	
-	func _init(title, message).(title, message):
+	func _init(_message, _title).(_message, _title):
 		pass
 		
 	func get_id():

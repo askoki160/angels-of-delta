@@ -33,29 +33,39 @@ func alert(title: String, text: String) -> void:
 	dialog.window_title = title
 	dialog.connect('modal_closed', dialog, 'queue_free')
 	add_child(dialog)
-	dialog.popup_centered()
+	dialog.popup_centered_minsize(Vector2(400, 100))
 	
 func _on_end_turn():
 	var field_actions = all_field_actions[self.current_player.pos_index]
 	var end_turn = true
 	
 	for action in field_actions:
-		print("actions ")
-		print( action.get_id())
 		match action.get_id():
 			'BaseField':
-				print("base")
-				print(action.message)
-				alert(action.message, action.title)
+				alert(action.title, action.message)
 			'MoveField':
-				alert(action.message, action.title)
-				state.take_turn(action.move_number)
+				alert(action.title, action.message)
+				yield(get_tree().create_timer(2), "timeout")
+				self.current_player.take_turn(action.move_number)
 			'PlayAgainField':
-				alert(action.message, action.title)
+				alert(action.title, action.message)
 				end_turn = false
+			'MovePreviousPositionField':
+				alert(action.title, action.message)
+				yield(get_tree().create_timer(2), "timeout")
+				var last_thrown = self.current_player.last_dice_thrown_number
+				self.current_player.take_turn(-last_thrown)
 			'MoveStartField':
-				alert(action.message, action.title)
+				alert(action.title, action.message)
 				self.current_player.set_position(0)
+			'ThrowDiceField':
+				var thrown = self.current_player.last_dice_thrown_number
+				var complete_message = action.message + tr(" That is in your case: ") + str(thrown)
+				alert(action.title, complete_message)
+	if end_turn:
+		state._next_player()
+	$CurrentPlayerTurn.text = "Current player turn: " + str(state.get_current_index())
+
 	if end_turn:
 		state._next_player()
 	$CurrentPlayerTurn.text = "Current player turn: " + str(state.get_current_index())
