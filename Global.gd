@@ -71,6 +71,7 @@ func list_files_in_directory(path):
 
 	return files
 	
+
 func goto_scene(path):
 	# This function will usually be called from a signal callback,
 	# or some other function in the current scene.

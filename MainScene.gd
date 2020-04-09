@@ -9,7 +9,6 @@ var current_player = null
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	$NumberOfPlayers.text = str(global_vars.players)
 	$CurrentPlayerTurn.text = "Current player turn: " + str(state.get_current_index())
 	var map = Utils.Map.new(self, global_vars.fields)
 	map.generate_fields()
