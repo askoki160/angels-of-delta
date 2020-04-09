@@ -1,5 +1,6 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=4 format=2]
 
+[ext_resource path="res://assets/fonts/single_day_dynamic.tres" type="DynamicFont" id=1]
 [ext_resource path="res://DiceScene.tscn" type="PackedScene" id=2]
 [ext_resource path="res://MainScene.gd" type="Script" id=4]
 
@@ -15,14 +16,15 @@ __meta__ = {
 }
 
 [node name="Dice" parent="." instance=ExtResource( 2 )]
-position = Vector2( 201.403, 416.056 )
+position = Vector2( 135.05, 597.236 )
 
 [node name="CurrentPlayerTurn" type="Label" parent="."]
 modulate = Color( 0, 0, 0, 1 )
-margin_left = 199.52
-margin_top = 186.782
-margin_right = 512.52
-margin_bottom = 295.782
+margin_left = 139.132
+margin_top = 188.73
+margin_right = 452.132
+margin_bottom = 297.73
+custom_fonts/font = ExtResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
