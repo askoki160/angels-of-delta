@@ -123,7 +123,7 @@ class Map:
 		Generate fields of the game. Starts from top left and goes clockwise.
 		"""
 		var position_x = -int(rect_width / 2)
-		var position_y = int(rect_height / 2)
+		var position_y = int(rect_height / 2) + 20
 		var board_fields_extent = (n_cols + n_rows - 2)
 		var cumulative_fields = board_fields_extent * 2
 		var right_vertical_border = board_fields_extent + 1
