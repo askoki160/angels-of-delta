@@ -40,6 +40,7 @@ func _on_Dice_dice_thrown(dice_number):
 
 func alert(title: String, text: String) -> void:
 	var dialog = AcceptDialog.new()
+	dialog.theme = load("res://assets/my_theme.tres")
 	dialog.dialog_text = text
 	dialog.window_title = title
 	dialog.connect('modal_closed', dialog, 'queue_free')
