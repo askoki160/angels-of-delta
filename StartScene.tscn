@@ -12,6 +12,7 @@ margin_left = 493.282
 margin_top = 370.697
 margin_right = 610.282
 margin_bottom = 411.697
+size_flags_vertical = 9
 min_value = 1.0
 max_value = 10.0
 value = 1.0
