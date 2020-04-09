@@ -11,6 +11,7 @@ signal ended_turn
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	$PlayerName.text = self.name
 	set_position(init_position_index)
 	
 func set_position(board_index):

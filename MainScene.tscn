@@ -18,10 +18,11 @@ __meta__ = {
 position = Vector2( 201.403, 416.056 )
 
 [node name="CurrentPlayerTurn" type="Label" parent="."]
-margin_left = 579.795
-margin_top = 440.298
-margin_right = 892.795
-margin_bottom = 549.298
+modulate = Color( 0, 0, 0, 1 )
+margin_left = 199.52
+margin_top = 186.782
+margin_right = 512.52
+margin_bottom = 295.782
 __meta__ = {
 "_edit_use_anchors_": false
 }

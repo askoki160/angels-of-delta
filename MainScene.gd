@@ -9,7 +9,6 @@ var current_player = null
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	$CurrentPlayerTurn.text = "Current player turn: " + str(state.get_current_index())
 	var map = Utils.Map.new(self, global_vars.fields)
 	map.generate_fields()
 	for i in range(global_vars.players):
@@ -20,6 +19,8 @@ func _ready():
 		player_instance.connect("ended_turn", self, "_on_end_turn")
 		state.add_player(player_instance)
 		add_child(player_instance)
+	
+	$CurrentPlayerTurn.text = "Current player turn: " + str(state.get_current_name())
 
 
 func _on_Dice_dice_thrown(dice_number):
@@ -63,8 +64,5 @@ func _on_end_turn():
 				alert(action.title, complete_message)
 	if end_turn:
 		state._next_player()
-	$CurrentPlayerTurn.text = "Current player turn: " + str(state.get_current_index())
-
-	if end_turn:
-		state._next_player()
-	$CurrentPlayerTurn.text = "Current player turn: " + str(state.get_current_index())
+	# update current player turn
+	$CurrentPlayerTurn.text = "Current player turn: " + str(state.get_current_name())
