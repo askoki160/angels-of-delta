@@ -1,0 +1,52 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://assets/fonts/single_day_small.tres" type="DynamicFont" id=1]
+
+[node name="PlayerPositionLegend" type="Node2D"]
+
+[node name="Left" type="Label" parent="."]
+modulate = Color( 0, 0, 0, 1 )
+margin_right = 200.0
+margin_bottom = 50.0
+custom_fonts/font = ExtResource( 1 )
+text = "Left: "
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Top" type="Label" parent="."]
+modulate = Color( 0, 0, 0, 1 )
+margin_top = 50.0
+margin_right = 200.0
+margin_bottom = 100.0
+custom_fonts/font = ExtResource( 1 )
+text = "Top:"
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Right" type="Label" parent="."]
+modulate = Color( 0, 0, 0, 1 )
+margin_top = 100.0
+margin_right = 200.0
+margin_bottom = 150.0
+custom_fonts/font = ExtResource( 1 )
+text = "Right:"
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Bottom" type="Label" parent="."]
+modulate = Color( 0, 0, 0, 1 )
+margin_top = 150.0
+margin_right = 200.0
+margin_bottom = 200.0
+custom_fonts/font = ExtResource( 1 )
+text = "Bottom:"
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}

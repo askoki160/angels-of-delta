@@ -14,7 +14,18 @@ func _ready():
 	for i in range(global_vars.players):
 		var Player = load("res://Player.tscn")
 		var player_instance = Player.instance()
-		player_instance.set_name("player_" + str(i))
+		var player_name = "Player_" + str(i)
+		player_instance.set_name(player_name)
+		var player_sitting_position = i % global_vars.sitting_positions
+		match (player_sitting_position):
+			0:
+				$PlayerPositionLegend.get_node("Left").text += player_name + ", "
+			1:
+				$PlayerPositionLegend.get_node("Top").text += player_name + ", "
+			2:
+				$PlayerPositionLegend.get_node("Right").text += player_name + ", "
+			3:
+				$PlayerPositionLegend.get_node("Bottom").text += player_name + ", "
 		# connect all field instances
 		player_instance.connect("ended_turn", self, "_on_end_turn")
 		state.add_player(player_instance)

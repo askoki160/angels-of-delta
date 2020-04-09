@@ -4,6 +4,8 @@ extends Node
 var players = 1
 var current_scene = null
 
+var sitting_positions = 4
+
 var fields: Array
 var all_field_actions = [
 		[Utils.BaseField.new(tr('Drink one'), tr('Start'))],
