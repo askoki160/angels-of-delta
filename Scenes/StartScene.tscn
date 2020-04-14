@@ -1,0 +1,63 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://assets/fonts/single_day_dynamic.tres" type="DynamicFont" id=1]
+[ext_resource path="res://assets/fonts/single_day_large.tres" type="DynamicFont" id=2]
+[ext_resource path="res://Scripts/StartScene.gd" type="Script" id=3]
+
+[node name="Node2D" type="Node2D"]
+script = ExtResource( 3 )
+
+[node name="SpinBox" type="SpinBox" parent="."]
+margin_left = 493.282
+margin_top = 370.697
+margin_right = 610.282
+margin_bottom = 411.697
+size_flags_vertical = 9
+min_value = 1.0
+max_value = 10.0
+value = 1.0
+rounded = true
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="NumberOfPlayerLabel" type="Label" parent="."]
+margin_left = 78.1312
+margin_top = 245.092
+margin_right = 1021.13
+margin_bottom = 346.092
+custom_fonts/font = ExtResource( 1 )
+text = "Enter number of players:"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="StartButton" type="Button" parent="."]
+margin_left = 371.173
+margin_top = 503.995
+margin_right = 735.173
+margin_bottom = 573.995
+custom_fonts/font = ExtResource( 1 )
+custom_colors/font_color_disabled = Color( 0, 0, 0, 1 )
+text = "Start"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Title" type="Label" parent="."]
+margin_left = 124.884
+margin_top = 83.3243
+margin_right = 978.884
+margin_bottom = 217.324
+custom_fonts/font = ExtResource( 2 )
+text = "Angels of Delta"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+[connection signal="value_changed" from="SpinBox" to="." method="_on_SpinBox_value_changed"]
+[connection signal="pressed" from="StartButton" to="." method="_on_Button_pressed"]

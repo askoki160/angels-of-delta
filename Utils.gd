@@ -153,7 +153,7 @@ class Map:
 			else:
 				position_y -= rect_height + 10
 				
-			var Field = load("res://Field.tscn")
+			var Field = load("res://Scenes/Field.tscn")
 			var field_instance = Field.instance()
 			field_instance.position = Vector2(position_x, position_y)
 			field_instance.resize_sprite(rect_height, rect_width)

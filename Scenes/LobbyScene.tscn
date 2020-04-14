@@ -1,0 +1,24 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://assets/fonts/single_day_dynamic.tres" type="DynamicFont" id=1]
+
+[node name="Node2D" type="Node2D"]
+
+[node name="AllPlayers" type="Label" parent="."]
+margin_right = 1117.0
+margin_bottom = 197.0
+custom_fonts/font = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Button" type="Button" parent="."]
+margin_left = 302.0
+margin_top = 313.505
+margin_right = 760.0
+margin_bottom = 436.505
+custom_fonts/font = ExtResource( 1 )
+text = "Start"
+__meta__ = {
+"_edit_use_anchors_": false
+}
