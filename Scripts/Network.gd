@@ -5,7 +5,7 @@ const DEFAULT_PORT = 31400
 const MAX_PLAYERS = 5
 
 var players = { }
-var self_data = { name = '', position = Vector2(360, 180) }
+var self_data = { name = '', position = 0 }
 
 signal player_disconnected
 signal server_disconnected
@@ -22,6 +22,7 @@ func create_server(player_nickname):
 	get_tree().set_network_peer(peer)
 
 func connect_to_server(player_nickname):
+	print("igrac ", player_nickname)
 	self_data.name = player_nickname
 	get_tree().connect('connected_to_server', self, '_connected_to_server')
 	var peer = NetworkedMultiplayerENet.new()
@@ -55,11 +56,12 @@ remote func _request_players(request_from_id):
 
 remote func _send_player_info(id, info):
 	players[id] = info
-	var new_player = load('res://player/Player.tscn').instance()
-	new_player.name = str(id)
-	new_player.set_network_master(id)
-	$'/root/Game/'.add_child(new_player)
-	new_player.init(info.name, info.position, true)
+	print(info.name)
+	#var new_player = load('res://player/Player.tscn').instance()
+	#new_player.name = str(id)
+	#new_player.set_network_master(id)
+	#$'/root/Game/'.add_child(new_player)
+	#new_player.init(info.name, info.position, true)
 
 func update_position(id, position):
 	players[id].position = position

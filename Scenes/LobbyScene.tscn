@@ -1,8 +1,18 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://assets/fonts/single_day_dynamic.tres" type="DynamicFont" id=1]
+[ext_resource path="res://Scripts/Lobby.gd" type="Script" id=2]
 
 [node name="Node2D" type="Node2D"]
+script = ExtResource( 2 )
+
+[node name="ColorRect" type="ColorRect" parent="."]
+margin_right = 1117.0
+margin_bottom = 796.0
+color = Color( 0.289062, 0.276642, 0.276642, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="AllPlayers" type="Label" parent="."]
 margin_right = 1117.0
