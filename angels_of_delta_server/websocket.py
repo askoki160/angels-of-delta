@@ -1,14 +1,22 @@
+from django.core.cache import cache
 import json
+
+default_key = json.dumps([{
+    'players': []
+}])
+
 class MyStorage:
 
     def __init__(self):
-        self.players = []
+        pass
 
     def add_player(self, player):
-        self.players.append(player)
+        session = json.loads(cache.get_or_set('session', default_key))
+        session[0]['players'].append(player)
+        cache.set('session', json.dumps(session))
 
     def get_all_players(self):
-        return self.players
+        return cache.get_or_set('session', default_key)
 
 
 async def websocket_application(scope, receive, send):
