@@ -38,16 +38,6 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="PlayerList" type="ItemList" parent="."]
-margin_left = 207.0
-margin_top = 200.804
-margin_right = 856.0
-margin_bottom = 565.804
-select_mode = 1
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
 [node name="PlayersLabel" type="Label" parent="."]
 margin_left = 205.385
 margin_top = 138.549
@@ -64,6 +54,30 @@ margin_left = 896.532
 margin_top = 46.317
 margin_right = 1047.53
 margin_bottom = 207.317
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Panel" type="Panel" parent="."]
+margin_left = 213.933
+margin_top = 211.0
+margin_right = 843.933
+margin_bottom = 571.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Panel"]
+margin_right = 630.0
+margin_bottom = 360.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="list" type="VBoxContainer" parent="Panel/ScrollContainer"]
+margin_right = 600.0
+margin_bottom = 320.0
+rect_min_size = Vector2( 600, 320 )
 __meta__ = {
 "_edit_use_anchors_": false
 }

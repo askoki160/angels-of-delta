@@ -21,30 +21,22 @@ func _ready():
 	# Alternatively, you could check get_peer(1).get_available_packets() in a loop.
 	_client.connect("data_received", self, "_on_data")
 	_client.connect("peer_packet", self, "_on_data")
+	
+
+
+func init_connection():
 	# Initiate connection to the given URL.
 	var err = _client.connect_to_url(websocket_url)
 	if err != OK:
 		print("Unable to connect")
 		set_process(false)
 	print("connected: ", err)
-	
-	
+
 # start game
 func _on_CreateButton_pressed():
-	var payload_dict = {
-		"name": _player_name
-	}
-	_client.get_peer(1).put_packet(to_json(payload_dict).to_utf8())
-#		$HTTPRequest.request("http://localhost:8000/custom/?format=json")
-		
-#func _on_HTTPRequest_request_completed(result, response_code, headers, body ):
-#	var json = JSON.parse(body.get_string_from_utf8())
-#	print(json.result)
-#	if _player_name == "":
-#		return
-#	Network.create_server(_player_name)
-#	_load_game()
-	# Global.goto_scene("res://Scenes/MainScene.tscn")
+	init_connection()
+
+
 func _closed(was_clean = false):
 	# was_clean will tell you if the disconnection was correctly notified
 	# by the remote peer before closing the socket.
@@ -57,7 +49,12 @@ func _connected(proto = ""):
 	print("Connected with protocol: ", proto)
 	# You MUST always use get_peer(1).put_packet to send data to server,
 	# and not put_packet directly when not using the MultiplayerAPI.
-	_client.get_peer(1).put_packet("ping".to_utf8())
+	Global.goto_scene("res://Scenes/LobbyScene.tscn")
+	var payload_dict = {
+		"name": _player_name
+	}
+	_client.get_peer(1).put_packet(to_json(payload_dict).to_utf8())
+#	_client.get_peer(1).put_packet("ping".to_utf8())
 
 func _on_data():
 	# Print the received packet, you MUST always use get_peer(1).get_packet

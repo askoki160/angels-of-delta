@@ -88,9 +88,9 @@ __meta__ = {
 }
 
 [node name="CreateButton" type="Button" parent="."]
-margin_left = 689.507
+margin_left = 688.075
 margin_top = 530.976
-margin_right = 889.507
+margin_right = 888.075
 margin_bottom = 593.976
 rect_min_size = Vector2( 200, 0 )
 custom_fonts/font = ExtResource( 1 )
