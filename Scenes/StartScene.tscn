@@ -14,44 +14,60 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="NameContainer" type="HBoxContainer" parent="."]
+[node name="Label2" type="Label" parent="."]
 margin_left = 204.0
-margin_top = 288.0
-margin_right = 977.0
-margin_bottom = 337.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Label" type="Label" parent="NameContainer"]
-margin_top = 9.0
-margin_right = 180.0
-margin_bottom = 40.0
+margin_top = 297.0
+margin_right = 384.0
+margin_bottom = 328.0
 custom_fonts/font = ExtResource( 1 )
 text = "Enter you name:"
 align = 2
-
-[node name="NameField" type="LineEdit" parent="NameContainer"]
-margin_left = 184.0
-margin_right = 784.0
-margin_bottom = 49.0
-rect_min_size = Vector2( 600, 0 )
-caret_blink = true
-caret_blink_speed = 0.5
-
-[node name="HBoxContainer" type="HBoxContainer" parent="."]
-margin_left = 208.0
-margin_top = 462.0
-margin_right = 955.0
-margin_bottom = 597.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="JoinButton" type="Button" parent="HBoxContainer"]
-margin_right = 200.0
-margin_bottom = 135.0
-rect_min_size = Vector2( 200, 0 )
+[node name="NameField" type="LineEdit" parent="."]
+margin_left = 395.268
+margin_top = 290.585
+margin_right = 995.268
+margin_bottom = 339.585
+rect_min_size = Vector2( 600, 0 )
+caret_blink = true
+caret_blink_speed = 0.5
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="JoinLabel" type="Label" parent="."]
+margin_left = 198.856
+margin_top = 399.036
+margin_right = 378.856
+margin_bottom = 430.036
+custom_fonts/font = ExtResource( 1 )
+text = "Room ID:"
+align = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="RoomField" type="LineEdit" parent="."]
+margin_left = 394.713
+margin_top = 388.0
+margin_right = 844.713
+margin_bottom = 436.0
+rect_min_size = Vector2( 450, 0 )
+caret_blink = true
+caret_blink_speed = 0.5
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="JoinButton" type="Button" parent="."]
+margin_left = 865.288
+margin_top = 387.857
+margin_right = 995.288
+margin_bottom = 436.857
+rect_min_size = Vector2( 130, 0 )
 custom_fonts/font = ExtResource( 1 )
 custom_colors/font_color_disabled = Color( 0, 0, 0, 1 )
 text = "Join"
@@ -59,10 +75,23 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="CreateButton" type="Button" parent="HBoxContainer"]
-margin_left = 204.0
-margin_right = 404.0
-margin_bottom = 135.0
+[node name="JoinLabel2" type="Label" parent="."]
+margin_left = 293.687
+margin_top = 542.663
+margin_right = 643.687
+margin_bottom = 593.663
+custom_fonts/font = ExtResource( 1 )
+text = "Want to host a game?"
+align = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CreateButton" type="Button" parent="."]
+margin_left = 689.507
+margin_top = 530.976
+margin_right = 889.507
+margin_bottom = 593.976
 rect_min_size = Vector2( 200, 0 )
 custom_fonts/font = ExtResource( 1 )
 custom_colors/font_color_disabled = Color( 0, 0, 0, 1 )
@@ -85,10 +114,14 @@ __meta__ = {
 }
 
 [node name="Label" type="Label" parent="."]
-margin_left = 733.879
-margin_top = 445.326
-margin_right = 1025.88
-margin_bottom = 541.326
-[connection signal="text_changed" from="NameContainer/NameField" to="." method="_on_NameField_text_changed"]
-[connection signal="pressed" from="HBoxContainer/JoinButton" to="." method="_on_JoinButton_pressed"]
-[connection signal="pressed" from="HBoxContainer/CreateButton" to="." method="_on_CreateButton_pressed"]
+margin_left = 89.0712
+margin_top = 510.574
+margin_right = 381.072
+margin_bottom = 606.574
+__meta__ = {
+"_edit_use_anchors_": false
+}
+[connection signal="text_changed" from="NameField" to="." method="_on_NameField_text_changed"]
+[connection signal="text_changed" from="RoomField" to="." method="_on_NameField_text_changed"]
+[connection signal="pressed" from="JoinButton" to="." method="_on_JoinButton_pressed"]
+[connection signal="pressed" from="CreateButton" to="." method="_on_CreateButton_pressed"]
