@@ -1,16 +1,14 @@
-extends Control
+extends Node2D
 
 onready var global_vars = get_node("/root/Global")
+onready var _client = global_vars._client
+onready var websocket_url = global_vars.websocket_url
 var _player_name = ""
 
 func _on_NameField_text_changed(new_text):
 	_player_name = new_text
 
-# The URL we will connect to
-export var websocket_url = "ws://localhost:8000/"
 
-# Our WebSocketClient instance
-var _client = WebSocketClient.new()
 func _ready():
 	# Connect base signals to get notified of connection open, close, and errors.
 	_client.connect("connection_closed", self, "_closed")
@@ -20,8 +18,6 @@ func _ready():
 	# a full packet is received.
 	# Alternatively, you could check get_peer(1).get_available_packets() in a loop.
 	_client.connect("data_received", self, "_on_data")
-	_client.connect("peer_packet", self, "_on_data")
-	
 
 
 func init_connection():
@@ -49,22 +45,29 @@ func _connected(proto = ""):
 	print("Connected with protocol: ", proto)
 	# You MUST always use get_peer(1).put_packet to send data to server,
 	# and not put_packet directly when not using the MultiplayerAPI.
-	Global.goto_scene("res://Scenes/LobbyScene.tscn")
 	var payload_dict = {
 		"name": _player_name
 	}
 	_client.get_peer(1).put_packet(to_json(payload_dict).to_utf8())
-#	_client.get_peer(1).put_packet("ping".to_utf8())
+	Global.goto_scene("res://Scenes/LobbyScene.tscn")
 
 func _on_data():
 	# Print the received packet, you MUST always use get_peer(1).get_packet
 	# to receive data from server, and not get_packet directly when not
 	# using the MultiplayerAPI.
-	print('here')
 	var parse_output =_client.get_peer(1).get_packet().get_string_from_utf8()
 	if _player_name in parse_output:
 		$Label.text = parse_output
-	print("Got data from server: ", parse_output)
+	
+	var json = JSON.parse(parse_json(parse_output))
+	if json.error == OK:
+		if typeof(json.result) == TYPE_DICTIONARY:
+			print(json.result.players)
+			global_vars.remote_players = json.result.players
+	else:
+		print("unexpected results")
+	
+	print("Global players: ", global_vars.remote_players)
 	
 func _process(delta):
 	# Call this in _process or _physics_process. Data transfer, and signals

@@ -1,5 +1,9 @@
 extends Node2D
 
+onready var global_vars = get_node("/root/Global")
+onready var _client = global_vars._client
+onready var websocket_url = global_vars.websocket_url
+
 const PlayerItem = preload("res://Scenes/PlayerItem.tscn")
 
 func addItem(itemIndex, itemName):
@@ -10,22 +14,22 @@ func addItem(itemIndex, itemName):
 	$Panel/ScrollContainer/list.add_child(item)
 	
 func _ready():
-	get_tree().connect('network_peer_disconnected', self, '_on_player_disconnected')
-	get_tree().connect('server_disconnected', self, '_on_server_disconnected')
+	# Connect base signals to get notified of connection open, close, and errors.
+	_client.connect("connection_closed", self, "_closed")
+	_client.connect("connection_error", self, "_closed")
+	# This signal is emitted when not using the Multiplayer API every time
+	# a full packet is received.
+	# Alternatively, you could check get_peer(1).get_available_packets() in a loop.
+	_client.connect("data_received", self, "_on_data")
+	_client.connect("peer_packet", self, "_on_data")
+
+
+func _on_data():
+	var players = global_vars.remote_players
+	for i in range(players.size()):
+		addItem(str(i+1), players[i])
 	
-	for i in range(40):
-		var it = str(i)
-		addItem(it, "Name " + it)
-	#var new_player = preload('res://player/Player.tscn').instance()
-	#new_player.name = str(get_tree().get_network_unique_id())
-	#new_player.set_network_master(get_tree().get_network_unique_id())
-	#add_child(new_player)
-	var info = Network.self_data
-	$AllPlayers.text += str(info.name)
-	#new_player.init(info.name, info.position, false)
-
-func _on_player_disconnected(id):
-	get_node(str(id)).queue_free()
-
-func _on_server_disconnected():
-	get_tree().change_scene('res://interface/Menu.tscn')
+func _process(delta):
+	# Call this in _process or _physics_process. Data transfer, and signals
+	# emission will only happen when calling this function.
+	_client.poll()
