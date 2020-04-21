@@ -61,7 +61,7 @@ class GameConsumer(AsyncWebsocketConsumer):
             await self.accept()
 
     async def disconnect(self, close_code):
-        storage.remove_player(self.channel_name)
+        storage.remove_player(self.room_name, self.channel_name)
         # Leave room group
         await self.channel_layer.group_discard(
             self.room_group_name,
