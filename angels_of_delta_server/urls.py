@@ -1,4 +1,6 @@
 from django.conf.urls import url, include
+from django.urls import path
+from django.contrib import admin
 from rest_framework import routers, serializers, viewsets, views
 from rest_framework.response import Response
 from rest_framework import serializers
@@ -19,10 +21,15 @@ class YourView(views.APIView):
 router = routers.DefaultRouter()
 #router.register(r'custom', YourView)
 
-# Wire up our API using automatic URL routing.
-# Additionally, we include login URLs for the browsable API.
+# # Wire up our API using automatic URL routing.
+# # Additionally, we include login URLs for the browsable API.
+# urlpatterns = [
+#     url(r'^', include(router.urls)),
+#     # url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
+#     # url(r'^custom/', YourView.as_view())
+# ]
+
 urlpatterns = [
-    url(r'^', include(router.urls)),
-    # url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
-    # url(r'^custom/', YourView.as_view())
+    path('chat/', include('game.urls')),
+    path('admin/', admin.site.urls),
 ]
