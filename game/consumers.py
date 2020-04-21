@@ -15,17 +15,17 @@ class MyStorage:
     def __init__(self):
         pass
 
-    def add_player(self, player, channel_id):
-        session = json.loads(cache.get_or_set('session', default_key))
+    def add_player(self, room_name, player, channel_id):
+        session = json.loads(cache.get_or_set(room_name, default_key))
         session['players'].append(player)
         session['channel_ids'].append(channel_id)
-        cache.set('session', json.dumps(session))
+        cache.set(room_name, json.dumps(session))
 
-    def get_all_data(self):
-        return cache.get_or_set('session', default_key)
+    def get_all_data(self, room_name):
+        return cache.get_or_set(room_name, default_key)
 
-    def remove_player(self, channel_id):
-        session = cache.get('session')
+    def remove_player(self, room_name, channel_id):
+        session = cache.get(room_name)
         if not session:
             # TODO: add error handling
             return
@@ -35,7 +35,7 @@ class MyStorage:
             if channel_id == _id:
                 del data['players'][idx]
                 del data['channel_ids'][idx]
-                cache.set('session', json.dumps(data))
+                cache.set(room_name, json.dumps(data))
                 print("Deleted")
                 return 
 
@@ -45,10 +45,10 @@ class MyStorage:
 storage = MyStorage()
 
 
-class ChatConsumer(AsyncWebsocketConsumer):
+class GameConsumer(AsyncWebsocketConsumer):
     async def connect(self):
         self.room_name = self.scope['url_route']['kwargs']['room_name']
-        self.room_group_name = 'chat_%s' % self.room_name
+        self.room_group_name = 'game_%s' % self.room_name
 
         # Join room group
         await self.channel_layer.group_add(
@@ -69,8 +69,8 @@ class ChatConsumer(AsyncWebsocketConsumer):
         await self.channel_layer.group_send(
             self.room_group_name,
             {
-                'type': 'chat_message',
-                'message': json.dumps(storage.get_all_data())
+                'type': 'game_message',
+                'message': json.dumps(storage.get_all_data(self.room_name))
             }
         )
 
@@ -78,18 +78,18 @@ class ChatConsumer(AsyncWebsocketConsumer):
     async def receive(self, bytes_data):
         decoded_input = json.loads(bytes_data.decode("utf-8"))
         if decoded_input["name"] != "":
-            storage.add_player(decoded_input["name"], self.channel_name)
+            storage.add_player(self.room_name, decoded_input["name"], self.channel_name)
             # Send message to room group
             await self.channel_layer.group_send(
                 self.room_group_name,
                 {
-                    'type': 'chat_message',
-                    'message': json.dumps(storage.get_all_data())
+                    'type': 'game_message',
+                    'message': json.dumps(storage.get_all_data(self.room_name))
                 }
             )
 
     # Receive message from room group
-    async def chat_message(self, event):
+    async def game_message(self, event):
         message = event['message']
 
         # Send message to WebSocket

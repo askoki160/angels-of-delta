@@ -4,6 +4,6 @@ from django.contrib import admin
 
 
 urlpatterns = [
-    path('chat/', include('game.urls')),
+    path('game/', include('game.urls')),
     path('admin/', admin.site.urls),
 ]

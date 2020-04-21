@@ -1,11 +1,8 @@
 from django.shortcuts import render
+from django.http import JsonResponse
+from django.utils.crypto import get_random_string
 
 
-def index(request):
-    return render(request, 'game/index.html')
-
-
-def room(request, room_name):
-    return render(request, 'game/room.html', {
-        'room_name': room_name
-    })
+def room(request):
+    room_key = get_random_string(length=4)
+    return JsonResponse({'room_key': room_key})
