@@ -49,12 +49,26 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="AllPlayers" type="Label" parent="."]
-margin_left = 896.532
-margin_top = 46.317
-margin_right = 1047.53
-margin_bottom = 207.317
+[node name="CodeLabel" type="Label" parent="."]
+margin_left = 470.856
+margin_top = 136.791
+margin_right = 658.856
+margin_bottom = 177.791
+custom_fonts/font = ExtResource( 1 )
+text = "Room code:"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Code" type="Label" parent="."]
+margin_left = 603.0
+margin_top = 90.0
+margin_right = 871.0
+margin_bottom = 191.0
+custom_fonts/font = ExtResource( 3 )
 custom_colors/font_color = Color( 1, 1, 1, 1 )
+align = 1
+valign = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }

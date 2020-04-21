@@ -2,7 +2,8 @@ extends Node
 
 # multiplayer
 # The URL we will connect to
-export var websocket_url = "ws://localhost:8000/ws/chat/room_name/"
+export var websocket_url = "ws://localhost:8000/ws/game/"
+export var room_key = ""
 
 # Our WebSocketClient instance
 var _client = WebSocketClient.new()

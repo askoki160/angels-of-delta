@@ -114,6 +114,8 @@ margin_bottom = 606.574
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="HTTPRequest" type="HTTPRequest" parent="."]
 [connection signal="text_changed" from="NameField" to="." method="_on_NameField_text_changed"]
 [connection signal="text_changed" from="RoomField" to="." method="_on_NameField_text_changed"]
 [connection signal="pressed" from="JoinButton" to="." method="_on_JoinButton_pressed"]

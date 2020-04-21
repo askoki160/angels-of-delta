@@ -29,6 +29,7 @@ func _ready():
 	# Alternatively, you could check get_peer(1).get_available_packets() in a loop.
 	_client.connect("data_received", self, "_on_data")
 	_client.connect("peer_packet", self, "_on_data")
+	$Code.text = global_vars.room_key
 
 
 func _on_data():
