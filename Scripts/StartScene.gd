@@ -26,6 +26,7 @@ func init_connection():
 	if err != OK:
 		print("Unable to connect")
 		set_process(false)
+	set_process(true)
 	print("connected: ", err)
 
 # start game
@@ -56,9 +57,7 @@ func _on_data():
 	# to receive data from server, and not get_packet directly when not
 	# using the MultiplayerAPI.
 	var parse_output =_client.get_peer(1).get_packet().get_string_from_utf8()
-	if _player_name in parse_output:
-		$Label.text = parse_output
-	
+		
 	var json = JSON.parse(parse_json(parse_output))
 	if json.error == OK:
 		if typeof(json.result) == TYPE_DICTIONARY:
@@ -67,22 +66,13 @@ func _on_data():
 	else:
 		print("unexpected results")
 	
-	print("Global players: ", global_vars.remote_players)
-	
 func _process(delta):
 	# Call this in _process or _physics_process. Data transfer, and signals
 	# emission will only happen when calling this function.
 	_client.poll()
 
-func _on_SpinBox_value_changed(value):
-	global_vars.players = value
-
-
 func _on_JoinButton_pressed():
-	if _player_name == "":
-		return
-	Network.connect_to_server(_player_name)
-	_load_game()
+	init_connection()
 	
 func _load_game():
 	get_tree().change_scene("res://Scenes/LobbyScene.tscn")
