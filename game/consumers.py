@@ -50,13 +50,15 @@ class GameConsumer(AsyncWebsocketConsumer):
         self.room_name = self.scope['url_route']['kwargs']['room_name']
         self.room_group_name = 'game_%s' % self.room_name
 
-        # Join room group
-        await self.channel_layer.group_add(
-            self.room_group_name,
-            self.channel_name
-        )
+        exists = cache.get(self.room_name)
+        if exists:
+            # Join room group
+            await self.channel_layer.group_add(
+                self.room_group_name,
+                self.channel_name
+            )
 
-        await self.accept()
+            await self.accept()
 
     async def disconnect(self, close_code):
         storage.remove_player(self.channel_name)
