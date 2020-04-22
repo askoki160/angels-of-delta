@@ -3,12 +3,7 @@ from django.shortcuts import render
 from django.core.cache import cache
 from django.http import JsonResponse
 from django.utils.crypto import get_random_string
-
-
-default_key = json.dumps({
-    'players': [],
-    'channel_ids': []
-})
+from .consumers import default_key
 
 
 def room(request):
