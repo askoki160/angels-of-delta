@@ -39,17 +39,14 @@ func _ready():
 func _on_data():
 	var parse_output =_client.get_peer(1).get_packet().get_string_from_utf8()
 	if parse_output != "":
-		print("1st ", parse_output)
 		var json = JSON.parse(parse_json(parse_output))
-		print("json ", json)
 		if json.error == OK:
 			if typeof(json.result) == TYPE_DICTIONARY:
 				print(json.result.players)
 				global_vars.remote_players = json.result.players
 		else:
-			print("unexpected results")
-		
-		print("Global players: ", global_vars.remote_players)
+			# TODO: improve error handling
+			print("Unexpected result")
 	var players = global_vars.remote_players
 	reset_items()
 	for i in range(players.size()):
