@@ -16,14 +16,19 @@ _global_script_class_icons={
 [application]
 
 config/name="Angels Of Delta"
-run/main_scene="res://StartScene.tscn"
+run/main_scene="res://Scenes/StartScene.tscn"
 config/icon="res://icon.png"
 
 [autoload]
 
 Utils="*res://Utils.gd"
 Global="*res://Global.gd"
-StartScene="*res://StartScene.tscn"
+StartScene="*res://Scenes/StartScene.tscn"
+Network="*res://Scripts/Network.gd"
+
+[debug]
+
+gdscript/warnings/enable=false
 
 [display]
 

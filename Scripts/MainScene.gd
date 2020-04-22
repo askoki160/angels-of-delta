@@ -2,7 +2,7 @@ extends Node2D
 
 onready var global_vars = get_node("/root/Global")
 onready var all_field_actions = global_vars.all_field_actions
-var Player = load("res://Player.tscn")
+var Player = load("res://Scenes/Player.tscn")
 
 var state = Utils.PlayerState.new()
 var current_player = null
@@ -12,7 +12,7 @@ func _ready():
 	var map = Utils.Map.new(self, global_vars.fields)
 	map.generate_fields()
 	for i in range(global_vars.players):
-		var Player = load("res://Player.tscn")
+		var Player = load("res://Scenes/Player.tscn")
 		var player_instance = Player.instance()
 		var player_name = "Player_" + str(i)
 		player_instance.set_name(player_name)

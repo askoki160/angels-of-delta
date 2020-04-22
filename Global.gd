@@ -1,5 +1,16 @@
 extends Node
 
+# multiplayer
+# The URL we will connect to
+export var websocket_url = "ws://localhost:8000/ws/game/"
+export var room_key = ""
+export var is_room_master = false
+
+# Our WebSocketClient instance
+var _client = WebSocketClient.new()
+
+var remote_players: Array;
+
 # default number of players
 var players = 1
 var current_scene = null
@@ -56,23 +67,6 @@ func _ready():
 	var root = get_tree().get_root()
 	current_scene = root.get_child(root.get_child_count() - 1)
 
-func list_files_in_directory(path):
-	var files = []
-	var dir = Directory.new()
-	dir.open(path)
-	dir.list_dir_begin()
-
-	while true:
-		var file = dir.get_next()
-		if file == "":
-			break
-		elif not file.begins_with("."):
-			files.append(file)
-
-	dir.list_dir_end()
-
-	return files
-	
 
 func goto_scene(path):
 	# This function will usually be called from a signal callback,

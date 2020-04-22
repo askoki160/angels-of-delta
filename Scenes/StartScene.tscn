@@ -1,0 +1,122 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://assets/fonts/single_day_dynamic.tres" type="DynamicFont" id=1]
+[ext_resource path="res://assets/fonts/single_day_large.tres" type="DynamicFont" id=2]
+[ext_resource path="res://Scripts/StartScene.gd" type="Script" id=3]
+
+[node name="Menu" type="Node2D"]
+script = ExtResource( 3 )
+
+[node name="Label2" type="Label" parent="."]
+margin_left = 204.0
+margin_top = 297.0
+margin_right = 384.0
+margin_bottom = 328.0
+custom_fonts/font = ExtResource( 1 )
+text = "Enter you name:"
+align = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="NameField" type="LineEdit" parent="."]
+margin_left = 395.268
+margin_top = 290.585
+margin_right = 995.268
+margin_bottom = 339.585
+rect_min_size = Vector2( 600, 0 )
+caret_blink = true
+caret_blink_speed = 0.5
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="JoinLabel" type="Label" parent="."]
+margin_left = 198.856
+margin_top = 399.036
+margin_right = 378.856
+margin_bottom = 430.036
+custom_fonts/font = ExtResource( 1 )
+text = "Room ID:"
+align = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="RoomField" type="LineEdit" parent="."]
+margin_left = 394.713
+margin_top = 388.0
+margin_right = 844.713
+margin_bottom = 436.0
+rect_min_size = Vector2( 450, 0 )
+caret_blink = true
+caret_blink_speed = 0.5
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="JoinButton" type="Button" parent="."]
+margin_left = 865.288
+margin_top = 387.857
+margin_right = 995.288
+margin_bottom = 436.857
+rect_min_size = Vector2( 130, 0 )
+custom_fonts/font = ExtResource( 1 )
+custom_colors/font_color_disabled = Color( 0, 0, 0, 1 )
+text = "Join"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="JoinLabel2" type="Label" parent="."]
+margin_left = 293.687
+margin_top = 542.663
+margin_right = 643.687
+margin_bottom = 593.663
+custom_fonts/font = ExtResource( 1 )
+text = "Want to host a game?"
+align = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CreateButton" type="Button" parent="."]
+margin_left = 688.075
+margin_top = 530.976
+margin_right = 888.075
+margin_bottom = 593.976
+rect_min_size = Vector2( 200, 0 )
+custom_fonts/font = ExtResource( 1 )
+custom_colors/font_color_disabled = Color( 0, 0, 0, 1 )
+text = "Create"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Title" type="Label" parent="."]
+margin_left = 124.884
+margin_top = 83.3243
+margin_right = 978.884
+margin_bottom = 217.324
+custom_fonts/font = ExtResource( 2 )
+text = "Angels of Delta"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="."]
+margin_left = 89.0712
+margin_top = 510.574
+margin_right = 381.072
+margin_bottom = 606.574
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HTTPRequest" type="HTTPRequest" parent="."]
+[connection signal="text_changed" from="NameField" to="." method="_on_NameField_text_changed"]
+[connection signal="text_changed" from="RoomField" to="." method="_on_NameField_text_changed"]
+[connection signal="pressed" from="JoinButton" to="." method="_on_JoinButton_pressed"]
+[connection signal="pressed" from="CreateButton" to="." method="_on_CreateButton_pressed"]
