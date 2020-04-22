@@ -70,15 +70,23 @@ func _on_data():
 	# to receive data from server, and not get_packet directly when not
 	# using the MultiplayerAPI.
 	var parse_output =_client.get_peer(1).get_packet().get_string_from_utf8()
-		
-	var json = JSON.parse(parse_json(parse_output))
-	if json.error == OK:
-		if typeof(json.result) == TYPE_DICTIONARY:
-			print(json.result.players)
-			global_vars.remote_players = json.result.players
+	if parse_output == "":
+		return
+
+	var first_conversion = parse_json(parse_output)
+
+	var json
+	if typeof(first_conversion) == TYPE_DICTIONARY:
+		json = first_conversion
 	else:
-		print("unexpected results")
-	
+		json = Utils._string_to_json(parse_json(parse_output))
+
+	if json.has('start'):
+		global_vars.start_player_index = json.start
+		get_tree().change_scene("res://Scenes/MainScene.tscn")
+	elif json:
+		global_vars.remote_players = json.players
+
 func _process(delta):
 	# Call this in _process or _physics_process. Data transfer, and signals
 	# emission will only happen when calling this function.

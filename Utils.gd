@@ -3,6 +3,21 @@ extends Node
 func _ready():
 	pass
 	
+func _string_to_json(input_text):
+#	Convert string to json (only on the first level)
+	if typeof(input_text) != TYPE_STRING:
+		print("Wrong input type. Should be String.")
+		return
+
+	var json = JSON.parse(input_text)
+	if json.error == OK:
+		if typeof(json.result) == TYPE_DICTIONARY:
+			return json.result
+	else:
+		# TODO: improve error handling
+		print("Unexpected result")
+		return false
+	
 class PlayerState:
 	var last_color_index = 0
 	var player_colors = [
@@ -16,6 +31,9 @@ class PlayerState:
 	
 	func _init():
 		current_player_index = 0
+		
+	func set_start_index(start_index):
+		current_player_index = start_index
 		
 	func add_player(player_instance):
 		var color = player_colors[last_color_index]

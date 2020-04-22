@@ -24,11 +24,6 @@ config/icon="res://icon.png"
 Utils="*res://Utils.gd"
 Global="*res://Global.gd"
 StartScene="*res://Scenes/StartScene.tscn"
-Network="*res://Scripts/Network.gd"
-
-[debug]
-
-gdscript/warnings/enable=false
 
 [display]
 

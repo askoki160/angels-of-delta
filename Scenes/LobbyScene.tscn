@@ -96,3 +96,4 @@ rect_min_size = Vector2( 600, 320 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
+[connection signal="button_up" from="StartButton" to="." method="_on_StartButton_button_up"]

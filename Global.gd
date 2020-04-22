@@ -10,6 +10,7 @@ export var is_room_master = false
 var _client = WebSocketClient.new()
 
 var remote_players: Array;
+var start_player_index: int;
 
 # default number of players
 var players = 1
