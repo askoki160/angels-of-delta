@@ -29,8 +29,12 @@ func _ready():
 	# Alternatively, you could check get_peer(1).get_available_packets() in a loop.
 	_client.connect("data_received", self, "_on_data")
 	_client.connect("peer_packet", self, "_on_data")
-	$Code.text = global_vars.room_key
-
+	if global_vars.is_room_master:
+		$Code.text = global_vars.room_key
+	else:
+		remove_child($Code)
+		remove_child($CodeLabel)
+		remove_child($StartButton)
 
 func _on_data():
 	var parse_output =_client.get_peer(1).get_packet().get_string_from_utf8()

@@ -38,7 +38,13 @@ func _on_CreateButton_pressed():
 func _on_request_completed(result, response_code, headers, body):
 	var json = JSON.parse(body.get_string_from_utf8())
 	global_vars.room_key = json.result.room_key
+	global_vars.is_room_master = true
 	print(json.result.room_key)
+	init_connection()
+
+func _on_JoinButton_pressed():
+	global_vars.is_room_master = false
+	global_vars.room_key = $RoomField.text
 	init_connection()
 
 func _closed(was_clean = false):
@@ -77,7 +83,3 @@ func _process(delta):
 	# Call this in _process or _physics_process. Data transfer, and signals
 	# emission will only happen when calling this function.
 	_client.poll()
-
-func _on_JoinButton_pressed():
-	global_vars.room_key = $RoomField.text
-	init_connection()
