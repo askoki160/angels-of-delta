@@ -4,6 +4,7 @@ onready var global_vars = get_node("/root/Global")
 onready var _client = global_vars._client
 onready var all_field_actions = global_vars.all_field_actions
 var Player = load("res://Scenes/Player.tscn")
+var all_player_instances = []
 
 var current_player = null
 var state = Utils.PlayerState.new()
@@ -16,7 +17,7 @@ func _ready():
 	map.generate_fields()
 	_init_players()
 	var payload_dict = {
-		"info": true
+		"info": 0
 	}
 	_client.get_peer(1).put_packet(to_json(payload_dict).to_utf8())
 
@@ -46,14 +47,28 @@ func _init_players():
 		# connect all field instances
 		player_instance.connect("ended_turn", self, "_on_end_turn")
 		state.add_player(player_instance)
+		all_player_instances.append(player_instance)
 		add_child(player_instance)
 	
 	$CurrentPlayerTurn.text = "Current player turn: " + str(state.get_current_name())
 
 func _on_data():
-	pass
+	var players = global_vars.remote_players
+	for i in range(players.size()):
+		print("asd ", players[i])
+		var player_json = Utils._string_to_json(players[i])
+		all_player_instances[i].move_to_position(int(player_json.position_index))
+		print("New position index ", all_player_instances[i].pos_index)
+	
+func _send_dice_info(dice_number):
+	var payload_dict = {
+		"info": dice_number
+	}
+	print("dice num ", payload_dict)
+	_client.get_peer(1).put_packet(to_json(payload_dict).to_utf8())
 
 func _on_Dice_dice_thrown(dice_number):
+	_send_dice_info(dice_number)
 	self.current_player = state.get_current_instance()
 	self.current_player.take_turn(dice_number)
 

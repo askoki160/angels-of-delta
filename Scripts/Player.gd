@@ -24,6 +24,12 @@ func set_position(board_index):
 	# move player on the board
 	self.position = field_pos + occupied * Vector2(10, 10)
 	fields[self.pos_index]['occupied'] += 1
+
+func move_to_position(position_index) -> void:
+#	This function is used to update all players positions 
+#   when server response is received
+	var board_index = (position_index) % fields.size()
+	set_position(board_index)
 	
 func take_turn(dice_number) -> void:
 	var board_index = (self.pos_index + dice_number) % fields.size()
