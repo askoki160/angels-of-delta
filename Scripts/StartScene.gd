@@ -35,7 +35,7 @@ func init_connection():
 func _on_CreateButton_pressed():
 	$HTTPRequest.request(get_room_url)
 
-func _on_request_completed(result, response_code, headers, body):
+func _on_request_completed(_result, _response_code, _headers, body):
 	var json = JSON.parse(body.get_string_from_utf8())
 	global_vars.room_key = json.result.room_key
 	global_vars.is_room_master = true
@@ -45,6 +45,7 @@ func _on_request_completed(result, response_code, headers, body):
 func _on_JoinButton_pressed():
 	global_vars.is_room_master = false
 	global_vars.room_key = $RoomField.text
+	print("join with ", global_vars.room_key)
 	init_connection()
 
 func _closed(was_clean = false):
@@ -62,6 +63,7 @@ func _connected(proto = ""):
 	var payload_dict = {
 		"name": _player_name
 	}
+	print("name ", _player_name)
 	_client.get_peer(1).put_packet(to_json(payload_dict).to_utf8())
 	get_tree().change_scene("res://Scenes/LobbyScene.tscn")
 
@@ -69,6 +71,7 @@ func _on_data():
 	# Print the received packet, you MUST always use get_peer(1).get_packet
 	# to receive data from server, and not get_packet directly when not
 	# using the MultiplayerAPI.
+	
 	var parse_output =_client.get_peer(1).get_packet().get_string_from_utf8()
 	if parse_output == "":
 		return
@@ -87,7 +90,7 @@ func _on_data():
 	elif json:
 		global_vars.remote_players = json.players
 
-func _process(delta):
+func _process(_delta):
 	# Call this in _process or _physics_process. Data transfer, and signals
 	# emission will only happen when calling this function.
 	_client.poll()

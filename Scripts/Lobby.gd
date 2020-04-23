@@ -37,8 +37,13 @@ func _ready():
 		remove_child($CodeLabel)
 		remove_child($StartButton)
 
-func _on_data():
+func _closed(was_clean = false):
+	# was_clean will tell you if the disconnection was correctly notified
+	# by the remote peer before closing the socket.
+	print("Closed, clean: ", was_clean)
+	set_process(false)
 	
+func _on_data():
 	var players = global_vars.remote_players
 	reset_items()
 	for i in range(players.size()):
@@ -46,7 +51,7 @@ func _on_data():
 		var player_json = Utils._string_to_json(players[i])
 		add_item(str(i+1), player_json.name)
 	
-func _process(delta):
+func _process(_delta):
 	# Call this in _process or _physics_process. Data transfer, and signals
 	# emission will only happen when calling this function.
 	_client.poll()

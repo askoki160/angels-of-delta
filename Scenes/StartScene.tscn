@@ -117,6 +117,5 @@ __meta__ = {
 
 [node name="HTTPRequest" type="HTTPRequest" parent="."]
 [connection signal="text_changed" from="NameField" to="." method="_on_NameField_text_changed"]
-[connection signal="text_changed" from="RoomField" to="." method="_on_NameField_text_changed"]
 [connection signal="pressed" from="JoinButton" to="." method="_on_JoinButton_pressed"]
 [connection signal="pressed" from="CreateButton" to="." method="_on_CreateButton_pressed"]
