@@ -47,6 +47,21 @@ class MyStorage:
         data['current_player_turn'] = self.current_player
         cache.set(room_name, json.dumps(data))
 
+    def update_player_position_index(self, room_name, channel_id, position_change_number):
+        session = cache.get(room_name)
+        if not session:
+            # TODO: add error handling
+            return
+
+        data = json.loads(session)
+        for idx, _id in enumerate(data['channel_ids']):
+            if channel_id == _id:
+                player_info = json.loads(data['players'][idx])
+                player_info['position_index'] += int(position_change_number)
+                print("Players position changed to: ", player_info['position_index'])
+                data['players'][idx] = json.dumps(player_info)
+                cache.set(room_name, json.dumps(data))
+
     def get_current_player_index(self):
         return self.current_player
 
@@ -132,8 +147,9 @@ class GameConsumer(AsyncWebsocketConsumer):
                 }
             )
 
-        # game info
+        # update player state
         if decoded_input.get('info', False):
+            storage.update_player_position_index(self.room_name, self.channel_name, decoded_input.get('info'))
              # Update players in a lobby
             await self.channel_layer.group_send(
                 self.room_group_name,
