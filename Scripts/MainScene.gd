@@ -24,7 +24,7 @@ func _process(delta):
 	_client.poll()
 
 func _init_players():
-	state.set_current_index(global_vars.start_player_index)
+	state.set_current_index(global_vars.current_player_index)
 	for i in range(global_vars.remote_players.size()):
 		var player_json = Utils._string_to_json(global_vars.remote_players[i])
 		var Player = load("res://Scenes/Player.tscn")
@@ -49,7 +49,7 @@ func _init_players():
 	
 	$CurrentPlayerTurn.text = "Current player turn: " + str(state.get_current_name())
 	_init_dice()
-	
+
 func _init_dice():
 	print("active vs local ", global_vars.current_player_index, " ", global_vars.client_index)
 	if global_vars.current_player_index == global_vars.client_index:
@@ -65,6 +65,7 @@ func _on_data():
 		global_vars.current_player_index = int(json_response.active_player)
 	else:
 		global_vars.remote_players = json_response.players
+		# important only when player is disconnected during the game
 		set_local_player_index()
 		
 	var players = global_vars.remote_players
@@ -83,11 +84,8 @@ func set_local_player_index():
 		if (player_json.name == global_vars.client_name):
 			global_vars.client_index = i
 
-func _send_dice_info(dice_number):
-	Network.send_json_data(_client, "info", dice_number)
-
 func _on_Dice_dice_thrown(dice_number):
-	_send_dice_info(dice_number)
+	Network.send_json_data(_client, "info", dice_number)
 	self.current_player = state.get_current_instance()
 	self.current_player.take_turn(dice_number)
 
@@ -112,14 +110,14 @@ func _on_end_turn():
 				alert(action.title, action.message)
 			'MoveField':
 				alert(action.title, action.message)
-#				yield(get_tree().create_timer(2), "timeout")
+				yield(get_tree().create_timer(2), "timeout")
 				self.current_player.take_turn(action.move_number)
 			'PlayAgainField':
 				alert(action.title, action.message)
 				end_turn = false
 			'MovePreviousPositionField':
 				alert(action.title, action.message)
-#				yield(get_tree().create_timer(2), "timeout")
+				yield(get_tree().create_timer(2), "timeout")
 				var last_thrown = self.current_player.last_dice_thrown_number
 				self.current_player.take_turn(-last_thrown)
 			'MoveStartField':

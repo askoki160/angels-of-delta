@@ -45,11 +45,12 @@ func _closed(was_clean = false):
 func _on_data():
 	var json_response = Network.parse_server_response(_client)
 
-	print("God data in lobby ", json_response)
+	print("Got data in lobby ", json_response)
 	if json_response && json_response.has('players'):
 		global_vars.remote_players = json_response.players
-	elif json_response && json_response.has('start'):
-		global_vars.start_player_index = json_response.start
+	elif json_response && json_response.has('start_player'):
+		global_vars.current_player_index = json_response.start_player
+		set_local_player_index()
 		# warning-ignore:return_value_discarded
 		_client.disconnect("data_received", self, "_on_data")
 		get_tree().change_scene("res://Scenes/MainScene.tscn")
@@ -65,6 +66,16 @@ func _process(_delta):
 	# Call this in _process or _physics_process. Data transfer, and signals
 	# emission will only happen when calling this function.
 	_client.poll()
+
+func set_local_player_index():
+	var players = global_vars.remote_players
+	print(players)
+	print("name ", global_vars.client_name)
+	for i in range(players.size()):
+		var player_json = Utils._string_to_json(players[i])
+		print("Player ", players[i])
+		if (player_json.name == global_vars.client_name):
+			global_vars.client_index = i
 
 func _on_StartButton_button_up():
 	Network.send_json_data(_client, "start", true)

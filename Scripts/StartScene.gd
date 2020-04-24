@@ -36,7 +36,7 @@ func _on_request_completed(_result, _response_code, _headers, body):
 func _on_JoinButton_pressed():
 	global_vars.is_room_master = false
 	global_vars.room_key = $RoomField.text
-	print("join with ", global_vars.room_key)
+	print("Join with ", global_vars.room_key)
 	Network.init_connection(_client, global_vars.room_key)
 
 func _closed(was_clean = false):
@@ -53,6 +53,7 @@ func _connected(proto = ""):
 	# and not put_packet directly when not using the MultiplayerAPI.
 	Network.send_json_data(_client, "name", _player_name)
 	print("name ", _player_name)
+	global_vars.client_name = _player_name
 	# warning-ignore:return_value_discarded
 	get_tree().change_scene("res://Scenes/LobbyScene.tscn")
 

@@ -8,7 +8,6 @@ export var is_room_master = false
 var _client = WebSocketClient.new()
 
 var remote_players: Array;
-var start_player_index: int;
 var current_player_index: int;
 # index of the player which is playing the game
 var client_index: int;
