@@ -2,7 +2,6 @@ extends Node2D
 
 onready var global_vars = get_node("/root/Global")
 onready var _client = global_vars._client
-onready var websocket_url = global_vars.websocket_url
 
 const PlayerItem = preload("res://Scenes/PlayerItem.tscn")
 var all_items = []

@@ -2,7 +2,7 @@ extends Node2D
 
 onready var global_vars = get_node("/root/Global")
 onready var _client = global_vars._client
-onready var websocket_url = global_vars.websocket_url
+
 
 const get_room_url = "http://localhost:8000/game/get-room/"
 var _player_name = ""
@@ -23,15 +23,6 @@ func _ready():
 	$HTTPRequest.connect("request_completed", self, "_on_request_completed")
 
 
-func init_connection():
-	# Initiate connection to the given URL.
-	var err = _client.connect_to_url(websocket_url + global_vars.room_key + "/")
-	if err != OK:
-		print("Unable to connect")
-		set_process(false)
-	set_process(true)
-	print("connected: ", err)
-
 # create lobby
 func _on_CreateButton_pressed():
 	$HTTPRequest.request(get_room_url)
@@ -41,13 +32,13 @@ func _on_request_completed(_result, _response_code, _headers, body):
 	global_vars.room_key = json.result.room_key
 	global_vars.is_room_master = true
 	print(json.result.room_key)
-	init_connection()
+	Network.init_connection(_client, global_vars.room_key)
 
 func _on_JoinButton_pressed():
 	global_vars.is_room_master = false
 	global_vars.room_key = $RoomField.text
 	print("join with ", global_vars.room_key)
-	init_connection()
+	Network.init_connection(_client, global_vars.room_key)
 
 func _closed(was_clean = false):
 	# was_clean will tell you if the disconnection was correctly notified
@@ -75,27 +66,17 @@ func _on_data():
 	# to receive data from server, and not get_packet directly when not
 	# using the MultiplayerAPI.
 	
-	var parse_output =_client.get_peer(1).get_packet().get_string_from_utf8()
-	if parse_output == "":
-		return
+	var json_response = Network.parse_server_response(_client)
 
-	var first_conversion = parse_json(parse_output)
-
-	var json
-	if typeof(first_conversion) == TYPE_DICTIONARY:
-		json = first_conversion
-	else:
-		json = Utils._string_to_json(parse_json(parse_output))
-
-	if json.has('start'):
-		global_vars.start_player_index = json.start
+	if json_response.has('start'):
+		global_vars.start_player_index = json_response.start
 		# warning-ignore:return_value_discarded
 		get_tree().change_scene("res://Scenes/MainScene.tscn")
-	elif json.has('active_player'):
-		print(" active_player ", json)
-		global_vars.current_player_index = json.active_player
+	elif json_response.has('active_player'):
+		print(" active_player ", json_response)
+		global_vars.current_player_index = json_response.active_player
 	else:
-		global_vars.remote_players = json.players
+		global_vars.remote_players = json_response.players
 		set_local_player_index()
 
 func set_local_player_index():

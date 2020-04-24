@@ -1,8 +1,6 @@
 extends Node
 
 # multiplayer
-# The URL we will connect to
-export var websocket_url = "ws://localhost:8000/ws/game/"
 export var room_key = ""
 export var is_room_master = false
 
