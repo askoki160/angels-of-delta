@@ -16,10 +16,7 @@ func _ready():
 	var map = Map.Map.new(self, global_vars.fields)
 	map.generate_fields()
 	_init_players()
-	var payload_dict = {
-		"info": 0
-	}
-	_client.get_peer(1).put_packet(to_json(payload_dict).to_utf8())
+	Network.send_json_data(_client, "info", 0)
 
 func _process(delta):
 	# Call this in _process or _physics_process. Data transfer, and signals
@@ -64,8 +61,8 @@ func _on_data():
 	var json_response = Network.parse_server_response(_client)
 	if json_response.has('active_player'):
 		print(" active_player ", json_response)
-		state.set_current_index(json_response.active_player)
-		global_vars.current_player_index = json_response.active_player
+		state.set_current_index(int(json_response.active_player))
+		global_vars.current_player_index = int(json_response.active_player)
 	else:
 		global_vars.remote_players = json_response.players
 		set_local_player_index()
@@ -87,10 +84,7 @@ func set_local_player_index():
 			global_vars.client_index = i
 
 func _send_dice_info(dice_number):
-	var payload_dict = {
-		"info": dice_number
-	}
-	_client.get_peer(1).put_packet(to_json(payload_dict).to_utf8())
+	Network.send_json_data(_client, "info", dice_number)
 
 func _on_Dice_dice_thrown(dice_number):
 	_send_dice_info(dice_number)
@@ -139,9 +133,6 @@ func _on_end_turn():
 	if end_turn:
 		state._next_player()
 		print("current player index ", state.get_current_index())
-		var payload_dict = {
-			"turn_ended": state.get_current_index()
-		}
-		_client.get_peer(1).put_packet(to_json(payload_dict).to_utf8())
+		Network.send_json_data(_client, "turn_ended", state.get_current_index())
 		# update current player turn
 		$CurrentPlayerTurn.text = "Current player turn: " + str(state.get_current_name())

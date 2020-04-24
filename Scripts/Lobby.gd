@@ -44,14 +44,18 @@ func _closed(was_clean = false):
 	
 func _on_data():
 	var json_response = Network.parse_server_response(_client)
-	if json_response && json_response.has('start'):
+
+	print("God data in lobby ", json_response)
+	if json_response && json_response.has('players'):
+		global_vars.remote_players = json_response.players
+	elif json_response && json_response.has('start'):
 		global_vars.start_player_index = json_response.start
 		# warning-ignore:return_value_discarded
 		_client.disconnect("data_received", self, "_on_data")
 		get_tree().change_scene("res://Scenes/MainScene.tscn")
-	
-	var players = global_vars.remote_players
+
 	reset_items()
+	var players = global_vars.remote_players
 	for i in range(players.size()):
 #		print("Player ", players[i])
 		var player_json = Utils._string_to_json(players[i])
@@ -63,7 +67,4 @@ func _process(_delta):
 	_client.poll()
 
 func _on_StartButton_button_up():
-	var payload_dict = {
-		"start": true
-	}
-	_client.get_peer(1).put_packet(to_json(payload_dict).to_utf8())
+	Network.send_json_data(_client, "start", true)

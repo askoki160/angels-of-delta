@@ -51,21 +51,17 @@ func _connected(proto = ""):
 	print("Connected with protocol: ", proto)
 	# You MUST always use get_peer(1).put_packet to send data to server,
 	# and not put_packet directly when not using the MultiplayerAPI.
-	var payload_dict = {
-		"name": _player_name
-	}
+	Network.send_json_data(_client, "name", _player_name)
 	print("name ", _player_name)
-	global_vars.client_name = _player_name
-	_client.get_peer(1).put_packet(to_json(payload_dict).to_utf8())
 	# warning-ignore:return_value_discarded
 	get_tree().change_scene("res://Scenes/LobbyScene.tscn")
 
 func _on_data():
 	var json_response = Network.parse_server_response(_client)
-	
-	if json_response.has('players'):
+	if json_response && json_response.has('players'):
 		global_vars.remote_players = json_response.players
 		_client.disconnect("data_received", self, "_on_data")
+		print("disconnect")
 
 func _process(_delta):
 	# Call this in _process or _physics_process. Data transfer, and signals

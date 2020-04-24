@@ -28,3 +28,10 @@ func init_connection(_client, room_key):
 		set_process(false)
 	set_process(true)
 	print("connected: ", err)
+	
+func send_json_data(_client, key, value):
+	_client.get_peer(1).put_packet(
+		to_json({
+			key: value	
+		}).to_utf8()
+	)
