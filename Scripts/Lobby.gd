@@ -47,7 +47,7 @@ func _on_data():
 	var players = global_vars.remote_players
 	reset_items()
 	for i in range(players.size()):
-		print("asd ", players[i])
+#		print("Player ", players[i])
 		var player_json = Utils._string_to_json(players[i])
 		add_item(str(i+1), player_json.name)
 	

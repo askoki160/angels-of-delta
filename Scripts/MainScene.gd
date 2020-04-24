@@ -7,13 +7,13 @@ var Player = load("res://Scenes/Player.tscn")
 var all_player_instances = []
 
 var current_player = null
-var state = Utils.PlayerState.new()
+var state = State.PlayerState.new()
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	_client.connect("data_received", self, "_on_data")
 	_client.connect("connection_closed", self, "_closed")
 	_client.connect("connection_error", self, "_closed")
-	var map = Utils.Map.new(self, global_vars.fields)
+	var map = Map.Map.new(self, global_vars.fields)
 	map.generate_fields()
 	_init_players()
 	var payload_dict = {
@@ -27,7 +27,7 @@ func _process(delta):
 	_client.poll()
 
 func _init_players():
-	state.set_start_index(global_vars.start_player_index)
+	state.set_current_index(global_vars.start_player_index)
 	for i in range(global_vars.remote_players.size()):
 		var player_json = Utils._string_to_json(global_vars.remote_players[i])
 		var Player = load("res://Scenes/Player.tscn")
@@ -51,11 +51,20 @@ func _init_players():
 		add_child(player_instance)
 	
 	$CurrentPlayerTurn.text = "Current player turn: " + str(state.get_current_name())
+	_init_dice()
+	
+func _init_dice():
+	print("active vs local ", global_vars.current_player_index, " ", global_vars.client_index)
+	if global_vars.current_player_index == global_vars.client_index:
+		$Dice.visible = true
+	else:
+		$Dice.visible = false
 
 func _on_data():
 	var players = global_vars.remote_players
+	_init_dice()
 	for i in range(players.size()):
-		print("asd ", players[i])
+		print("Updating player: ", players[i])
 		var player_json = Utils._string_to_json(players[i])
 		all_player_instances[i].move_to_position(int(player_json.position_index))
 		print("New position index ", all_player_instances[i].pos_index)
@@ -64,7 +73,6 @@ func _send_dice_info(dice_number):
 	var payload_dict = {
 		"info": dice_number
 	}
-	print("dice num ", payload_dict)
 	_client.get_peer(1).put_packet(to_json(payload_dict).to_utf8())
 
 func _on_Dice_dice_thrown(dice_number):
@@ -85,20 +93,22 @@ func _on_end_turn():
 	var field_actions = all_field_actions[self.current_player.pos_index]
 	var end_turn = true
 	
+	print("end 1 ", end_turn)
+	
 	for action in field_actions:
 		match action.get_id():
 			'BaseField':
 				alert(action.title, action.message)
 			'MoveField':
 				alert(action.title, action.message)
-				yield(get_tree().create_timer(2), "timeout")
+#				yield(get_tree().create_timer(2), "timeout")
 				self.current_player.take_turn(action.move_number)
 			'PlayAgainField':
 				alert(action.title, action.message)
 				end_turn = false
 			'MovePreviousPositionField':
 				alert(action.title, action.message)
-				yield(get_tree().create_timer(2), "timeout")
+#				yield(get_tree().create_timer(2), "timeout")
 				var last_thrown = self.current_player.last_dice_thrown_number
 				self.current_player.take_turn(-last_thrown)
 			'MoveStartField':
@@ -108,7 +118,13 @@ func _on_end_turn():
 				var thrown = self.current_player.last_dice_thrown_number
 				var complete_message = action.message + tr(" That is in your case: ") + str(thrown)
 				alert(action.title, complete_message)
+	print("end2 ", end_turn)
 	if end_turn:
 		state._next_player()
-	# update current player turn
-	$CurrentPlayerTurn.text = "Current player turn: " + str(state.get_current_name())
+		print("current player index ", state.get_current_index())
+		var payload_dict = {
+			"turn_ended": state.get_current_index()
+		}
+		_client.get_peer(1).put_packet(to_json(payload_dict).to_utf8())
+		# update current player turn
+		$CurrentPlayerTurn.text = "Current player turn: " + str(state.get_current_name())

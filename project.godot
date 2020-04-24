@@ -21,6 +21,8 @@ config/icon="res://icon.png"
 
 [autoload]
 
+Map="*res://Scripts/helpers/Map.gd"
+State="*res://Scripts/helpers/State.gd"
 Utils="*res://Utils.gd"
 Global="*res://Global.gd"
 StartScene="*res://Scenes/StartScene.tscn"

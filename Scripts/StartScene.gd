@@ -19,6 +19,7 @@ func _ready():
 	# a full packet is received.
 	# Alternatively, you could check get_peer(1).get_available_packets() in a loop.
 	_client.connect("data_received", self, "_on_data")
+	# warning-ignore:return_value_discarded
 	$HTTPRequest.connect("request_completed", self, "_on_request_completed")
 
 
@@ -64,7 +65,9 @@ func _connected(proto = ""):
 		"name": _player_name
 	}
 	print("name ", _player_name)
+	global_vars.client_name = _player_name
 	_client.get_peer(1).put_packet(to_json(payload_dict).to_utf8())
+	# warning-ignore:return_value_discarded
 	get_tree().change_scene("res://Scenes/LobbyScene.tscn")
 
 func _on_data():
@@ -86,9 +89,22 @@ func _on_data():
 
 	if json.has('start'):
 		global_vars.start_player_index = json.start
+		# warning-ignore:return_value_discarded
 		get_tree().change_scene("res://Scenes/MainScene.tscn")
-	elif json:
+	elif json.has('active_player'):
+		print(" active_player ", json)
+		global_vars.current_player_index = json.active_player
+	else:
 		global_vars.remote_players = json.players
+		set_local_player_index()
+
+func set_local_player_index():
+	var players = global_vars.remote_players
+	for i in range(players.size()):
+		var player_json = Utils._string_to_json(players[i])
+		print("Player ", players[i])
+		if (player_json.name == global_vars.client_name):
+			global_vars.client_index = i
 
 func _process(_delta):
 	# Call this in _process or _physics_process. Data transfer, and signals
