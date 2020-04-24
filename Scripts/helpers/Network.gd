@@ -11,7 +11,7 @@ func _ready():
 func parse_server_response(_client):
 	var parse_output =_client.get_peer(1).get_packet().get_string_from_utf8()
 	if parse_output == "":
-		print("Response is emty")
+		print("Response is empty")
 		return false
 
 	var first_conversion = parse_json(parse_output)

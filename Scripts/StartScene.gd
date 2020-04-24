@@ -22,7 +22,6 @@ func _ready():
 	# warning-ignore:return_value_discarded
 	$HTTPRequest.connect("request_completed", self, "_on_request_completed")
 
-
 # create lobby
 func _on_CreateButton_pressed():
 	$HTTPRequest.request(get_room_url)
@@ -62,30 +61,11 @@ func _connected(proto = ""):
 	get_tree().change_scene("res://Scenes/LobbyScene.tscn")
 
 func _on_data():
-	# Print the received packet, you MUST always use get_peer(1).get_packet
-	# to receive data from server, and not get_packet directly when not
-	# using the MultiplayerAPI.
-	
 	var json_response = Network.parse_server_response(_client)
-
-	if json_response.has('start'):
-		global_vars.start_player_index = json_response.start
-		# warning-ignore:return_value_discarded
-		get_tree().change_scene("res://Scenes/MainScene.tscn")
-	elif json_response.has('active_player'):
-		print(" active_player ", json_response)
-		global_vars.current_player_index = json_response.active_player
-	else:
+	
+	if json_response.has('players'):
 		global_vars.remote_players = json_response.players
-		set_local_player_index()
-
-func set_local_player_index():
-	var players = global_vars.remote_players
-	for i in range(players.size()):
-		var player_json = Utils._string_to_json(players[i])
-		print("Player ", players[i])
-		if (player_json.name == global_vars.client_name):
-			global_vars.client_index = i
+		_client.disconnect("data_received", self, "_on_data")
 
 func _process(_delta):
 	# Call this in _process or _physics_process. Data transfer, and signals

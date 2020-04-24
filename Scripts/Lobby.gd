@@ -43,6 +43,13 @@ func _closed(was_clean = false):
 	set_process(false)
 	
 func _on_data():
+	var json_response = Network.parse_server_response(_client)
+	if json_response && json_response.has('start'):
+		global_vars.start_player_index = json_response.start
+		# warning-ignore:return_value_discarded
+		_client.disconnect("data_received", self, "_on_data")
+		get_tree().change_scene("res://Scenes/MainScene.tscn")
+	
 	var players = global_vars.remote_players
 	reset_items()
 	for i in range(players.size()):

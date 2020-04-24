@@ -61,6 +61,15 @@ func _init_dice():
 		$Dice.visible = false
 
 func _on_data():
+	var json_response = Network.parse_server_response(_client)
+	if json_response.has('active_player'):
+		print(" active_player ", json_response)
+		state.set_current_index(json_response.active_player)
+		global_vars.current_player_index = json_response.active_player
+	else:
+		global_vars.remote_players = json_response.players
+		set_local_player_index()
+		
 	var players = global_vars.remote_players
 	_init_dice()
 	for i in range(players.size()):
@@ -68,7 +77,15 @@ func _on_data():
 		var player_json = Utils._string_to_json(players[i])
 		all_player_instances[i].move_to_position(int(player_json.position_index))
 		print("New position index ", all_player_instances[i].pos_index)
-	
+
+func set_local_player_index():
+	var players = global_vars.remote_players
+	for i in range(players.size()):
+		var player_json = Utils._string_to_json(players[i])
+		print("Player ", players[i])
+		if (player_json.name == global_vars.client_name):
+			global_vars.client_index = i
+
 func _send_dice_info(dice_number):
 	var payload_dict = {
 		"info": dice_number
