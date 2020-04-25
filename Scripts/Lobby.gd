@@ -2,7 +2,6 @@ extends Node2D
 
 onready var global_vars = get_node("/root/Global")
 onready var _client = global_vars._client
-onready var websocket_url = global_vars.websocket_url
 
 const PlayerItem = preload("res://Scenes/PlayerItem.tscn")
 var all_items = []
@@ -44,10 +43,22 @@ func _closed(was_clean = false):
 	set_process(false)
 	
 func _on_data():
-	var players = global_vars.remote_players
+	var json_response = Network.parse_server_response(_client)
+
+	print("Got data in lobby ", json_response)
+	if json_response && json_response.has('players'):
+		global_vars.remote_players = json_response.players
+	elif json_response && json_response.has('start_player'):
+		global_vars.current_player_index = json_response.start_player
+		set_local_player_index()
+		# warning-ignore:return_value_discarded
+		_client.disconnect("data_received", self, "_on_data")
+		get_tree().change_scene("res://Scenes/MainScene.tscn")
+
 	reset_items()
+	var players = global_vars.remote_players
 	for i in range(players.size()):
-		print("asd ", players[i])
+#		print("Player ", players[i])
 		var player_json = Utils._string_to_json(players[i])
 		add_item(str(i+1), player_json.name)
 	
@@ -56,8 +67,15 @@ func _process(_delta):
 	# emission will only happen when calling this function.
 	_client.poll()
 
+func set_local_player_index():
+	var players = global_vars.remote_players
+	print(players)
+	print("Name ", global_vars.client_name)
+	for i in range(players.size()):
+		var player_json = Utils._string_to_json(players[i])
+		print("Player ", players[i])
+		if (player_json.name == global_vars.client_name):
+			global_vars.client_index = i
+
 func _on_StartButton_button_up():
-	var payload_dict = {
-		"start": true
-	}
-	_client.get_peer(1).put_packet(to_json(payload_dict).to_utf8())
+	Network.send_json_data(_client, "start", true)

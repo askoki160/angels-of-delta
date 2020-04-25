@@ -1,8 +1,6 @@
 extends Node
 
 # multiplayer
-# The URL we will connect to
-export var websocket_url = "ws://localhost:8000/ws/game/"
 export var room_key = ""
 export var is_room_master = false
 
@@ -10,7 +8,10 @@ export var is_room_master = false
 var _client = WebSocketClient.new()
 
 var remote_players: Array;
-var start_player_index: int;
+var current_player_index: int;
+# index of the player which is playing the game
+var client_index: int;
+var client_name: String;
 
 # default number of players
 var players = 1
