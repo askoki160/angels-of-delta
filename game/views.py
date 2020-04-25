@@ -1,9 +1,7 @@
-import json
-from django.shortcuts import render
 from django.core.cache import cache
 from django.http import JsonResponse
 from django.utils.crypto import get_random_string
-from .consumers import default_key
+from .GameDataStorage import default_key
 
 
 def room(request):
