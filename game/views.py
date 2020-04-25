@@ -7,6 +7,6 @@ from .consumers import default_key
 
 
 def room(request):
-    room_key = get_random_string(length=4)
+    room_key = get_random_string(length=4).lower()
     cache.set(room_key, default_key)
     return JsonResponse({'room_key': room_key})
