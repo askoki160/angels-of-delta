@@ -70,7 +70,7 @@ func _process(_delta):
 func set_local_player_index():
 	var players = global_vars.remote_players
 	print(players)
-	print("name ", global_vars.client_name)
+	print("Name ", global_vars.client_name)
 	for i in range(players.size()):
 		var player_json = Utils._string_to_json(players[i])
 		print("Player ", players[i])

@@ -3,7 +3,7 @@ extends KinematicBody2D
 onready var global_vars = get_node("/root/Global/")
 onready var fields = global_vars.fields
 var pos_index = 0
-var init_position_index = 11
+var init_position_index = 0
 # needed for MoveField depending on dice number
 var last_dice_thrown_number = 0
 

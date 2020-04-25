@@ -8,8 +8,7 @@ func _ready():
 	pass
 
 func _on_Button_pressed():
-	# simulate throwing the dice
-#	var dice_number = randi() % 6 + 1
-#	$Label.text = str(dice_number)
-#	emit_signal("dice_thrown", dice_number)
-	emit_signal("dice_thrown", 1)
+    # simulate throwing the dice
+    var dice_number = randi() % 6 + 1
+    $Label.text = str(dice_number)
+    emit_signal("dice_thrown", dice_number)
