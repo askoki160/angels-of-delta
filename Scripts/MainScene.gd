@@ -48,9 +48,9 @@ func _init_players():
 		add_child(player_instance)
 	
 	$CurrentPlayerTurn.text = "Current player turn: " + str(state.get_current_name())
-	_init_dice()
+	_update_dice_visibility()
 
-func _init_dice():
+func _update_dice_visibility():
 	print("active vs local ", global_vars.current_player_index, " ", global_vars.client_index)
 	if global_vars.current_player_index == global_vars.client_index:
 		$Dice.visible = true
@@ -67,14 +67,22 @@ func _on_data():
 		global_vars.remote_players = json_response.players
 		# important only when player is disconnected during the game
 		set_local_player_index()
-		
-	var players = global_vars.remote_players
-	_init_dice()
-	for i in range(players.size()):
-		print("Updating player: ", players[i])
-		var player_json = Utils._string_to_json(players[i])
-		all_player_instances[i].move_to_position(int(player_json.position_index))
-		print("New position index ", all_player_instances[i].pos_index)
+	update_players_positions()
+
+func update_players_positions():
+		var players = global_vars.remote_players
+		_update_dice_visibility()
+		for i in range(players.size()):
+			print("Updating player: ", players[i])
+			var player_json = Utils._string_to_json(players[i])
+			var current_position = int(player_json.position_index)
+			var last_position = all_player_instances[i].pos_index
+			if last_position != current_position:
+				state.set_current_index(i)
+				self.current_player = state.get_current_instance()
+				self.current_player.take_turn(current_position - last_position)
+#			all_player_instances[i].move_to_position()
+				print("New position index ", all_player_instances[i].pos_index)
 
 func set_local_player_index():
 	var players = global_vars.remote_players
@@ -86,8 +94,8 @@ func set_local_player_index():
 
 func _on_Dice_dice_thrown(dice_number):
 	Network.send_json_data(_client, "info", dice_number)
-	self.current_player = state.get_current_instance()
-	self.current_player.take_turn(dice_number)
+#	self.current_player = state.get_current_instance()
+#	self.current_player.take_turn(dice_number)
 
 func alert(title: String, text: String) -> void:
 	var dialog = AcceptDialog.new()
@@ -122,7 +130,9 @@ func _on_end_turn():
 				self.current_player.take_turn(-last_thrown)
 			'MoveStartField':
 				alert(action.title, action.message)
-				self.current_player.set_position(0)
+				var current_position = self.current_player.pos_index
+				Network.send_json_data(_client, "info", -current_position)
+#				self.current_player.set_position(0)
 			'ThrowDiceField':
 				var thrown = self.current_player.last_dice_thrown_number
 				var complete_message = action.message + tr(" That is in your case: ") + str(thrown)
@@ -131,6 +141,9 @@ func _on_end_turn():
 	if end_turn:
 		state._next_player()
 		print("current player index ", state.get_current_index())
+		# set next player active
+		global_vars.current_player_index = state.get_current_index()
+		_update_dice_visibility()
 		Network.send_json_data(_client, "turn_ended", state.get_current_index())
 		# update current player turn
 		$CurrentPlayerTurn.text = "Current player turn: " + str(state.get_current_name())

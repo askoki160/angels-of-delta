@@ -3,7 +3,6 @@ extends Node2D
 onready var global_vars = get_node("/root/Global")
 onready var _client = global_vars._client
 
-
 const get_room_url = "http://localhost:8000/game/get-room/"
 var _player_name = ""
 
