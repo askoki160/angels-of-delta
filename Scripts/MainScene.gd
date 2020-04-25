@@ -116,19 +116,17 @@ func _on_end_turn():
                 alert(action.title, action.message)
             'MoveField':
                 alert(action.title, action.message)
-#				yield(get_tree().create_timer(1), "timeout")
                 end_turn = false
                 print("Move field: ", action.move_number)
 #                Otherwise request is doubled and it is applied to all players
                 if global_vars.client_index == global_vars.current_player_index:
                     Network.send_json_data(_client, "info", action.move_number)
-#				self.current_player.take_turn(action.move_number)
             'PlayAgainField':
                 alert(action.title, action.message)
                 end_turn = false
             'MovePreviousPositionField':
                 alert(action.title, action.message)
-#				yield(get_tree().create_timer(1), "timeout")
+#               yield(get_tree().create_timer(1), "timeout")
                 var last_thrown = self.current_player.last_dice_thrown_number
                 end_turn = false
                 print("Move previous field: ", last_thrown)
@@ -139,7 +137,6 @@ func _on_end_turn():
                 if global_vars.client_index == global_vars.current_player_index:
                     Network.send_json_data(_client, "info", 'reset')
                 end_turn = false
-#				yield(get_tree().create_timer(1), "timeout")
                 print(" send ")
             'ThrowDiceField':
                 var thrown = self.current_player.last_dice_thrown_number
