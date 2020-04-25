@@ -13,7 +13,7 @@ default_key = json.dumps({
 
 
 class MyStorage:
-    current_player = None
+    start_player_id = 0
 
     def __init__(self):
         pass
@@ -43,8 +43,8 @@ class MyStorage:
         if not player_max or player_max == 0:
             # TODO: raise exception
             return
-        self.current_player = random.randint(0, player_max - 1)
-        data['current_player_turn'] = self.current_player
+        data['current_player_turn'] = random.randint(0, player_max - 1)
+        self.start_player_id = data['current_player_turn']
         cache.set(room_name, json.dumps(data))
 
     def update_player_position_index(self, room_name, channel_id, position_change_number):
@@ -57,15 +57,29 @@ class MyStorage:
         for idx, _id in enumerate(data['channel_ids']):
             if channel_id == _id:
                 player_info = json.loads(data['players'][idx])
-                player_info['position_index'] += int(position_change_number)
-                print("Players position changed to: ", player_info['position_index'])
+                if position_change_number == 'reset':
+                    player_info['position_index'] = 0
+                else:
+                    position_change_number = int(position_change_number)
+                    player_info['position_index'] = (player_info['position_index'] + position_change_number) % 32
+                print(f'Player {player_info["name"]} position changed to: {player_info["position_index"]}')
                 data['players'][idx] = json.dumps(player_info)
                 cache.set(room_name, json.dumps(data))
 
-    def get_current_player_index(self):
-        return self.current_player
+    def update_current_player_turn(self, room_name, next_player_index):
+        session = cache.get(room_name)
+        if not session:
+            # TODO: add error handling
+            return
 
-    def remove_player(self, room_name, channel_id):
+        data = json.loads(session)
+        data['current_player_turn'] = int(next_player_index)
+        cache.set(room_name, json.dumps(data))
+
+    def get_start_player_id(self):
+        return self.start_player_id
+
+    def get_player_index(self, room_name, channel_id):
         session = cache.get(room_name)
         if not session:
             # TODO: add error handling
@@ -74,13 +88,25 @@ class MyStorage:
         data = json.loads(session)
         for idx, _id in enumerate(data['channel_ids']):
             if channel_id == _id:
-                del data['players'][idx]
-                del data['channel_ids'][idx]
-                cache.set(room_name, json.dumps(data))
-                print('Deleted')
-                return 
+                return idx
+        return None
 
-        print('Delete was not possible')
+    def remove_player(self, room_name, channel_id):
+        session = cache.get(room_name)
+        if not session:
+            # TODO: add error handling
+            return
+
+        data = json.loads(session)
+        player_index = self.get_player_index(room_name, channel_id)
+        if player_index is not None:
+            del data['players'][player_index]
+            del data['channel_ids'][player_index]
+            cache.set(room_name, json.dumps(data))
+            print('Deleted')
+            return
+        print('Delete was not possible ', player_index)
+        print(data)
 
 
 storage = MyStorage()
@@ -136,13 +162,13 @@ class GameConsumer(AsyncWebsocketConsumer):
         # start game
         if decoded_input.get('start', False):
             storage.init_start_player(self.room_name)
-             # Update players in a lobby
+            # Update players in a lobby
             await self.channel_layer.group_send(
                 self.room_group_name,
                 {
                     'type': 'game_message',
                     'message': json.dumps({
-                        'start': json.dumps(storage.get_current_player_index())
+                        'start_player': json.dumps(storage.get_start_player_id())
                     })
                 }
             )
@@ -150,12 +176,27 @@ class GameConsumer(AsyncWebsocketConsumer):
         # update player state
         if decoded_input.get('info', False):
             storage.update_player_position_index(self.room_name, self.channel_name, decoded_input.get('info'))
-             # Update players in a lobby
+            # Update players in a lobby
             await self.channel_layer.group_send(
                 self.room_group_name,
                 {
                     'type': 'game_message',
                     'message': json.dumps(storage.get_all_data(self.room_name))
+                }
+            )
+
+        # update player state
+        if decoded_input.get('turn_ended', False):
+            storage.update_current_player_turn(self.room_name, decoded_input.get('turn_ended'))
+            # update index of the next player
+            await self.channel_layer.group_send(
+                self.room_group_name,
+                {
+                    'type': 'game_message',
+                    'message': json.dumps({
+                        'active_player': json.dumps(decoded_input.get('turn_ended'))
+                    })
+
                 }
             )
 
