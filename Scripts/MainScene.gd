@@ -79,9 +79,10 @@ func update_players_positions():
 			var last_position = all_player_instances[i].pos_index
 			if last_position != current_position:
 				state.set_current_index(i)
+				print(" curr ", current_position)
+				print(" last ", last_position)
 				self.current_player = state.get_current_instance()
 				self.current_player.take_turn(current_position - last_position)
-#			all_player_instances[i].move_to_position()
 				print("New position index ", all_player_instances[i].pos_index)
 
 func set_local_player_index():
@@ -94,8 +95,6 @@ func set_local_player_index():
 
 func _on_Dice_dice_thrown(dice_number):
 	Network.send_json_data(_client, "info", dice_number)
-#	self.current_player = state.get_current_instance()
-#	self.current_player.take_turn(dice_number)
 
 func alert(title: String, text: String) -> void:
 	var dialog = AcceptDialog.new()
@@ -105,7 +104,7 @@ func alert(title: String, text: String) -> void:
 	dialog.connect('modal_closed', dialog, 'queue_free')
 	add_child(dialog)
 	dialog.popup_centered_minsize(Vector2(400, 100))
-	
+
 func _on_end_turn():
 	var field_actions = all_field_actions[self.current_player.pos_index]
 	var end_turn = true
@@ -119,7 +118,10 @@ func _on_end_turn():
 			'MoveField':
 				alert(action.title, action.message)
 				yield(get_tree().create_timer(2), "timeout")
-				self.current_player.take_turn(action.move_number)
+				end_turn = false
+				print("Move field: ", action.move_number)
+				Network.send_json_data(_client, "info", action.move_number)
+#				self.current_player.take_turn(action.move_number)
 			'PlayAgainField':
 				alert(action.title, action.message)
 				end_turn = false
@@ -127,16 +129,18 @@ func _on_end_turn():
 				alert(action.title, action.message)
 				yield(get_tree().create_timer(2), "timeout")
 				var last_thrown = self.current_player.last_dice_thrown_number
-				self.current_player.take_turn(-last_thrown)
+				end_turn = false
+				print("Move previous field: ", last_thrown)
+				Network.send_json_data(_client, "info", last_thrown)
 			'MoveStartField':
 				alert(action.title, action.message)
-				var current_position = self.current_player.pos_index
-				Network.send_json_data(_client, "info", -current_position)
-#				self.current_player.set_position(0)
+				Network.send_json_data(_client, "info", 0)
+				print(" send ")
 			'ThrowDiceField':
 				var thrown = self.current_player.last_dice_thrown_number
 				var complete_message = action.message + tr(" That is in your case: ") + str(thrown)
 				alert(action.title, complete_message)
+				end_turn = false
 	print("end2 ", end_turn)
 	if end_turn:
 		state._next_player()
