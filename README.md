@@ -1,8 +1,12 @@
 # angels-of-delta-server
 
-start websockets on development with: 
+install requirements:
 
-`uvicorn angels_of_delta_server.asgi:application`
+`pip install -r requirements.txt`
+
+start development with: 
+
+`python manage.py runserver`
 
 make sure redis server is running:
 
