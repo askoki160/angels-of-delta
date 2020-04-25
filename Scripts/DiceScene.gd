@@ -4,8 +4,7 @@ signal dice_thrown
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-#	randomize()
-	pass
+    randomize()
 
 func _on_Button_pressed():
     # simulate throwing the dice
