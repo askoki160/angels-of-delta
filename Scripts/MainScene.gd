@@ -73,10 +73,11 @@ func update_players_positions():
 		var players = global_vars.remote_players
 		_update_dice_visibility()
 		for i in range(players.size()):
-			print("Updating player: ", players[i])
+			print("\n\nUpdating player: ", players[i])
 			var player_json = Utils._string_to_json(players[i])
-			var current_position = int(player_json.position_index)
 			var last_position = all_player_instances[i].pos_index
+			
+			var current_position = int(player_json.position_index)
 			if last_position != current_position:
 				state.set_current_index(i)
 				print(" curr ", current_position)
@@ -106,6 +107,7 @@ func alert(title: String, text: String) -> void:
 	dialog.popup_centered_minsize(Vector2(400, 100))
 
 func _on_end_turn():
+	print("Player position: ", self.current_player.pos_index)
 	var field_actions = all_field_actions[self.current_player.pos_index]
 	var end_turn = true
 	
@@ -134,7 +136,8 @@ func _on_end_turn():
 				Network.send_json_data(_client, "info", last_thrown)
 			'MoveStartField':
 				alert(action.title, action.message)
-				Network.send_json_data(_client, "info", 0)
+				Network.send_json_data(_client, "info", 'reset')
+				yield(get_tree().create_timer(1), "timeout")
 				print(" send ")
 			'ThrowDiceField':
 				var thrown = self.current_player.last_dice_thrown_number
