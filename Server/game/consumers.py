@@ -1,6 +1,6 @@
 import json
 from django.core.cache import cache
-from .GameDataStorage import GameDataStorage
+from .data_storage import GameDataStorage
 from channels.generic.websocket import AsyncWebsocketConsumer
 
 storage = GameDataStorage()

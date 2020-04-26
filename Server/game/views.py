@@ -1,7 +1,7 @@
 from django.core.cache import cache
 from django.http import JsonResponse
 from django.utils.crypto import get_random_string
-from .GameDataStorage import default_key
+from .data_storage import default_key
 
 
 def room(request):
