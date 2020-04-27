@@ -119,11 +119,13 @@ STATIC_URL = '/static/'
 
 ASGI_APPLICATION = "angels_of_delta_server.routing.application"
 
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'angels-server']
+
 CHANNEL_LAYERS = {
     'default': {
         'BACKEND': 'channels_redis.core.RedisChannelLayer',
         'CONFIG': {
-            "hosts": [('127.0.0.1', 6379)],
+            "hosts": [('127.0.0.1', 6378)],
         },
     },
 }
