@@ -24,7 +24,7 @@ SECRET_KEY = 'o0wkg_p6_0fm+d@a(1&!+cr08f^xtk2xvg40jc3nsdzzm0&cg-'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'angels-server']
 
 # Application definition
 
@@ -119,13 +119,11 @@ STATIC_URL = '/static/'
 
 ASGI_APPLICATION = "angels_of_delta_server.routing.application"
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'angels-server']
-
 CHANNEL_LAYERS = {
     'default': {
         'BACKEND': 'channels_redis.core.RedisChannelLayer',
         'CONFIG': {
-            "hosts": [('127.0.0.1', 6378)],
+            "hosts": [('redis://conf_redis_1', 6379)],
         },
     },
 }
@@ -133,7 +131,7 @@ CHANNEL_LAYERS = {
 CACHES = {
     "default": {
         "BACKEND": "django_redis.cache.RedisCache",
-        "LOCATION": "redis://127.0.0.1:6379/1",
+        "LOCATION": "redis://conf_redis_1:6379/0",
         "OPTIONS": {
             "CLIENT_CLASS": "django_redis.client.DefaultClient"
         },
