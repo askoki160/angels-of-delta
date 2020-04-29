@@ -19,4 +19,4 @@ services:
       dockerfile: ./conf/Godot/Dockerfile
     container_name: angels-client
     ports:
-      - 8080:80
+      - 8090:80
