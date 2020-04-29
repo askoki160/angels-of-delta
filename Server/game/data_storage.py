@@ -11,7 +11,6 @@ default_key = json.dumps({
     'current_player_turn': None
 })
 
-
 class GameDataStorage:
     start_player_id = 0
 
@@ -64,7 +63,7 @@ class GameDataStorage:
                     player_info['position_index'] = 0
                 else:
                     position_change_number = int(position_change_number)
-                    player_info['position_index'] = (player_info['position_index'] + position_change_number) % 32
+                    player_info['position_index'] = (player_info['position_index'] + position_change_number) % 30
                 print(f'Player {player_info["name"]} position changed to: {player_info["position_index"]}')
                 data['players'][idx] = json.dumps(player_info)
                 cache.set(room_name, json.dumps(data))
