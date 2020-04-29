@@ -26,6 +26,7 @@ func init_connection(_client, room_key):
 	if err != OK:
 		print("Unable to connect")
 		set_process(false)
+		return
 	set_process(true)
 	print("connected: ", err)
 	
