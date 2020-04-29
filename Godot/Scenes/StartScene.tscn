@@ -57,9 +57,9 @@ __meta__ = {
 
 [node name="JoinButton" type="Button" parent="."]
 margin_left = 865.288
-margin_top = 387.857
+margin_top = 386.187
 margin_right = 995.288
-margin_bottom = 436.857
+margin_bottom = 435.187
 rect_min_size = Vector2( 130, 0 )
 custom_fonts/font = ExtResource( 1 )
 custom_colors/font_color_disabled = Color( 0, 0, 0, 1 )
@@ -82,9 +82,9 @@ __meta__ = {
 
 [node name="CreateButton" type="Button" parent="."]
 margin_left = 688.075
-margin_top = 530.976
+margin_top = 532.646
 margin_right = 888.075
-margin_bottom = 593.976
+margin_bottom = 595.646
 rect_min_size = Vector2( 200, 0 )
 custom_fonts/font = ExtResource( 1 )
 custom_colors/font_color_disabled = Color( 0, 0, 0, 1 )
@@ -118,4 +118,3 @@ __meta__ = {
 [node name="HTTPRequest" type="HTTPRequest" parent="."]
 [connection signal="text_changed" from="NameField" to="." method="_on_NameField_text_changed"]
 [connection signal="pressed" from="JoinButton" to="." method="_on_JoinButton_pressed"]
-[connection signal="pressed" from="CreateButton" to="." method="_on_CreateButton_pressed"]
