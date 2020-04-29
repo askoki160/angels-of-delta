@@ -3,8 +3,6 @@ import random
 from typing import Union
 from django.core.cache import cache
 
-cache.clear()
-
 default_key = json.dumps({
     'players': [],
     'channel_ids': [],
