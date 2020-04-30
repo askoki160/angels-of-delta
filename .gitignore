@@ -4,3 +4,5 @@ __pycache__/*
 env/*
 .idea/*
 Godot/exports/*
+conf/env/dev_env.sh
+conf/env/prod_env.sh
