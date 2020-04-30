@@ -11,6 +11,9 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 
 import os
+import environ
+
+env = environ.Env()
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -22,9 +25,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'o0wkg_p6_0fm+d@a(1&!+cr08f^xtk2xvg40jc3nsdzzm0&cg-'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = env.bool('DEBUG', default=False)
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'angels-server']
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'angels-server'] + env.list('WEB_PUBLIC_HOST')
 
 # Application definition
 
@@ -53,6 +56,7 @@ MIDDLEWARE = [
     'django.middleware.cache.FetchFromCacheMiddleware',
 ]
 
+# TODO: limit origin
 CORS_ORIGIN_ALLOW_ALL = True
 
 ROOT_URLCONF = 'angels_of_delta_server.urls'
@@ -148,7 +152,7 @@ CHANNEL_LAYERS = {
     'default': {
         'BACKEND': 'channels_redis.core.RedisChannelLayer',
         'CONFIG': {
-            "hosts": ["redis://conf_redis_1:6379/0"],
+            "hosts": [env.str('REDIS_URL')],
             # "hosts": [('127.0.0.1', 6379)],
         },
     },
@@ -157,7 +161,7 @@ CHANNEL_LAYERS = {
 CACHES = {
     "default": {
         "BACKEND": "django_redis.cache.RedisCache",
-        "LOCATION": "redis://conf_redis_1:6379/0",
+        "LOCATION": env.str('REDIS_URL'),
         # "LOCATION": "redis://127.0.0.1:6379/1",
         "OPTIONS": {
             "CLIENT_CLASS": "django_redis.client.DefaultClient"
