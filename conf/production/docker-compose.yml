@@ -8,15 +8,17 @@ services:
   angels-server:
     restart: always
     build:
-      context: '..'
-      dockerfile: ./conf/Server/Dockerfile
-    container_name: angels-server
+      context: '../..'
+      dockerfile: ./conf/Server/Dockerfile.prod
+    container_name: angels-server-prod
+    env_file:
+      - ../env/prod_env.sh
     ports:
       - 8000:8000
   angels-client:
     build:
-      context: '..'
+      context: '../..'
       dockerfile: ./conf/Godot/Dockerfile
     container_name: angels-client
     ports:
-      - 8090:80
+      - 8080:80
