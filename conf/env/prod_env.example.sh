@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 DEBUG=false
-WEB_DOMAIN_NAME=http://your_domain
-WEB_PUBLIC_HOST=http://your_host
+WEB_PUBLIC_HOST=http://your_server_url
+CLIENT_URL=http://your_client_url
 SECRET_KEY='your-production-key'
 REDIS_URL=redis://your_redis_url
-ALLOWED_HOSTS=".$WEB_DOMAIN_NAME, .$WEB_PUBLIC_HOST"
+ALLOWED_HOSTS=".$WEB_PUBLIC_HOST"

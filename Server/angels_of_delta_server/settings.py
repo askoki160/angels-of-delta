@@ -56,8 +56,7 @@ MIDDLEWARE = [
     'django.middleware.cache.FetchFromCacheMiddleware',
 ]
 
-# TODO: limit origin
-CORS_ORIGIN_ALLOW_ALL = True
+CORS_ORIGIN_WHITELIST = [env.str('CLIENT_URL', '')]
 
 ROOT_URLCONF = 'angels_of_delta_server.urls'
 
