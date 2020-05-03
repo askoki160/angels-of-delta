@@ -1,10 +1,12 @@
 version: '2'
 services:
-  redis:
+  angels-redis:
     restart: always
+    hostname: redis
     image: library/redis:latest
+    container_name: angels_redis
     ports:
-      - 6379:6379
+      - ${REDIS_PORT}:6379
   angels-server:
     restart: always
     build:
@@ -12,13 +14,13 @@ services:
       dockerfile: ./conf/Server/Dockerfile.prod
     container_name: angels-server-prod
     env_file:
-      - ../env/prod_env.sh
+      - ../Server/prod_env.sh
     ports:
-      - 8000:8000
+      - ${SERVER_PORT}:8000
   angels-client:
     build:
       context: '../..'
       dockerfile: ./conf/Godot/Dockerfile
     container_name: angels-client
     ports:
-      - 8080:80
+      - ${CLIENT_PORT}:80
