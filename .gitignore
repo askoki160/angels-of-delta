@@ -5,7 +5,7 @@ env/*
 .idea/*
 Godot/exports/*
 Godot/env_secrets.gd
-conf/Server/dev_env.sh
-conf/Server/prod_env.sh
+conf/Server/env/dev_env.sh
+conf/Server/env/prod_env.sh
 conf/development/.env
 conf/production/.env
