@@ -21,6 +21,7 @@ config/icon="res://icon.png"
 
 [autoload]
 
+env_secrets="*res://env_secrets.gd"
 Utils="*res://Utils.gd"
 Map="*res://Scripts/helpers/Map.gd"
 Network="*res://Scripts/helpers/Network.gd"

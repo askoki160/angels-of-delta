@@ -1,7 +1,8 @@
 extends Node
 
 # The URL we will connect to
-export var websocket_url = "ws://localhost:8000/ws/game/"
+onready var secret_vars = get_node("/root/env_secrets")
+onready var websocket_url = secret_vars.domain_ws_url + "/ws/game/"
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -26,6 +27,7 @@ func init_connection(_client, room_key):
 	if err != OK:
 		print("Unable to connect")
 		set_process(false)
+		return
 	set_process(true)
 	print("connected: ", err)
 	
