@@ -22,12 +22,12 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = env('SECRET_KEY')
+SECRET_KEY = env('SECRET_KEY', default='o0wkg_p6_0fm+d@a(1&!+cr08f^xtk2xvg40jc3nsdzzm0&cg-')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env.bool('DEBUG', default=False)
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'angels-server'] + env.list('WEB_PUBLIC_HOST')
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'angels-server'] + env.list('WEB_PUBLIC_HOST', default=[])
 
 # Application definition
 
@@ -56,7 +56,8 @@ MIDDLEWARE = [
     'django.middleware.cache.FetchFromCacheMiddleware',
 ]
 
-CORS_ORIGIN_WHITELIST = [env.str('CLIENT_URL', '')]
+# If used in development then define default as your client url
+CORS_ORIGIN_WHITELIST = [env.str('CLIENT_URL', default='http://localhost:8090')]
 
 ROOT_URLCONF = 'angels_of_delta_server.urls'
 
