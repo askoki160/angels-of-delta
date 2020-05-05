@@ -1,2 +1,5 @@
-COMPOSE_DIR_PATH=../conf/development
-docker-compose --env-file $COMPOSE_DIR_PATH/.env -f $COMPOSE_DIR_PATH/docker-compose.yml  -p delta down --rmi all
+#!/usr/bin/env bash
+
+COMPOSE_ENV_PATH=../conf/docker-compose/envs/.env_dev
+COMPOSE_PATH=../conf/docker-compose/app.dev.yml
+docker-compose --env-file $COMPOSE_ENV_PATH -f $COMPOSE_PATH  -p delta down --rmi all

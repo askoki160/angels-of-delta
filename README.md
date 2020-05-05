@@ -40,7 +40,7 @@ If that is not the case, server won't allow any requests from the client.
  
 2. Make sure that Godot app is exported in `/Godot/exports`
 
-3. In `/conf/development` create `.env` file from `.env.example` and define variables.
+3. In `/conf/docker-compose/envs` create `.env` file from `.env.example` and define variables.
 
 4. In `/conf/Server/env` create `dev_env.sh` file from `dev_env.example.sh` and define variables.
 
@@ -62,7 +62,7 @@ If that is not the case, server won't allow any requests from the client.
  
 2. Make sure that Godot app is exported in `/Godot/exports`
 
-3. In `/conf/production` create `.env` file from `.env.example` and define variables.
+3. In `/conf/docker-compose/envs` create `.env` file from `.env.example` and define variables.
 
 4. In `/conf/Server/env` create `prod_env.sh` file from `prod_env.example.sh` and define variables.
 
