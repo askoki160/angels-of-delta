@@ -57,7 +57,7 @@ MIDDLEWARE = [
 ]
 
 # If used in development then define default as your client url
-CORS_ORIGIN_WHITELIST = [env.str('CLIENT_URL', default='http://localhost:8090')]
+CORS_ORIGIN_WHITELIST = env.list('CLIENT_URLS', default=['http://localhost:8090'])
 
 ROOT_URLCONF = 'angels_of_delta_server.urls'
 
