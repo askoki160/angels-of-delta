@@ -1,9 +1,10 @@
 extends Node2D
 
 onready var global_vars = get_node("/root/Global")
+onready var secret_vars = get_node("/root/env_secrets")
 onready var _client = global_vars._client
 
-const get_room_url = "http://localhost:8000/game/get-room/"
+onready var get_room_url = secret_vars.domain_url + "/game/get-room/"
 var _player_name = ""
 
 func _on_NameField_text_changed(new_text):
@@ -21,11 +22,16 @@ func _ready():
 	# warning-ignore:return_value_discarded
 	$HTTPRequest.connect("request_completed", self, "_on_request_completed")
 
-# create lobby
-func _on_CreateButton_pressed():
-	$HTTPRequest.request(get_room_url)
+func _input(event):
+	if event is InputEventMouseButton:
+		# create lobby
+		if $CreateButton.pressed:
+			var error = $HTTPRequest.request(get_room_url)
+			if error != OK:
+				push_error("An error occurred in the HTTP request.")
 
 func _on_request_completed(_result, _response_code, _headers, body):
+	var test = body.get_string_from_utf8()
 	var json = JSON.parse(body.get_string_from_utf8())
 	global_vars.room_key = json.result.room_key
 	global_vars.is_room_master = true
@@ -57,6 +63,7 @@ func _connected(proto = ""):
 	get_tree().change_scene("res://Scenes/LobbyScene.tscn")
 
 func _on_data():
+	print("ondata")
 	var json_response = Network.parse_server_response(_client)
 	if json_response && json_response.has('players'):
 		global_vars.remote_players = json_response.players

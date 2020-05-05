@@ -3,3 +3,9 @@ __pycache__/*
 *.pyc
 env/*
 .idea/*
+Godot/exports/*
+Godot/env_secrets.gd
+conf/Server/env/dev_env.sh
+conf/Server/env/prod_env.sh
+conf/docker-compose/envs/.env_dev
+conf/docker-compose/envs/.env_prod
