@@ -53,9 +53,9 @@ func _init_players():
 func _update_dice_visibility():
     print("active vs local ", global_vars.current_player_index, " ", global_vars.client_index)
     if global_vars.current_player_index == global_vars.client_index:
-        $Dice.visible = true
+        $Dice.set_button_visibility(true)
     else:
-        $Dice.visible = false
+        $Dice.set_button_visibility(false)
 
 func _on_data():
     var json_response = Network.parse_server_response(_client)

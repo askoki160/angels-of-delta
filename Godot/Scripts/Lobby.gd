@@ -16,7 +16,7 @@ func add_item(itemIndex, itemName):
 	var item = PlayerItem.instance()
 	item.get_node("Name").text = itemName
 	item.get_node("Order").text = itemIndex
-	item.rect_min_size = Vector2(130, 30)
+	item.rect_min_size = Vector2(130, 60)
 	all_items.append(item)
 	$Panel/ScrollContainer/list.add_child(item)
 	

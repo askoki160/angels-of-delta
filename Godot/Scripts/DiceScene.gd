@@ -6,6 +6,9 @@ signal dice_thrown
 func _ready():
     randomize()
 
+func set_button_visibility(is_visible: bool):
+    $Button.visible = is_visible
+
 func _on_Button_pressed():
     # simulate throwing the dice
     var dice_number = randi() % 6 + 1
