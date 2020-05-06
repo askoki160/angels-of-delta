@@ -19,6 +19,8 @@ services:
       - ../Server/env/prod_env.sh
     ports:
       - ${SERVER_PORT}:8000
+    volumes:
+      - ../dev-certs:/certs
   angels-client:
     build:
       context: '../..'
