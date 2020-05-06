@@ -8,6 +8,7 @@ WORKDIR /app/server
 COPY Server/requirements.txt /app/server
 RUN pip3 install --upgrade pip -r requirements.txt
 RUN pip3 install daphne
+RUN pip3 install pyopenssl
 
 # Add the rest of the code
 COPY ./Server /app/server
@@ -15,4 +16,4 @@ COPY ./Server /app/server
 # Make port 8000 available for the app
 EXPOSE 8000
 
-CMD daphne -b 0.0.0.0 -p 8000 angels_of_delta_server.asgi:application
+CMD daphne -e ssl:8000:privateKey=/certs/privkey.pem:certKey=/certs/fullchain.pem angels_of_delta_server.asgi:application

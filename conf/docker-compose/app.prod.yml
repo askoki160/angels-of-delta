@@ -19,6 +19,8 @@ services:
       - ../Server/env/prod_env.sh
     ports:
       - ${SERVER_PORT}:8000
+    volumes:
+      - ../dev-certs:/certs
   angels-client:
     build:
       context: '../..'
@@ -26,3 +28,6 @@ services:
     container_name: ${CLIENT_CONTAINER_NAME}
     ports:
       - ${CLIENT_PORT}:80
+      - 443:443
+    volumes:
+      - ../dev-certs:/etc/nginx/certs
