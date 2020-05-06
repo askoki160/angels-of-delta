@@ -33,8 +33,18 @@ StartScene="*res://Scenes/StartScene.tscn"
 
 window/size/width=1120
 window/size/height=800
+window/size/test_width=600
+window/size/test_height=400
+window/stretch/mode="2d"
+window/stretch/aspect="keep_width"
 
 [global]
 
 pix=false
 "Use pixel snap"=true
+stretch=false
+stretch_mode=false
+
+[stretch_mode]
+
+stretch_mode=false

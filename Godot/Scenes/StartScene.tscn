@@ -8,10 +8,10 @@
 script = ExtResource( 3 )
 
 [node name="Label2" type="Label" parent="."]
-margin_left = 204.0
-margin_top = 297.0
-margin_right = 384.0
-margin_bottom = 328.0
+margin_left = 120.0
+margin_top = 300.0
+margin_right = 300.0
+margin_bottom = 330.0
 custom_fonts/font = ExtResource( 1 )
 text = "Enter you name:"
 align = 2
@@ -20,11 +20,12 @@ __meta__ = {
 }
 
 [node name="NameField" type="LineEdit" parent="."]
-margin_left = 395.268
-margin_top = 290.585
-margin_right = 995.268
-margin_bottom = 339.585
+margin_left = 330.0
+margin_top = 290.0
+margin_right = 1000.0
+margin_bottom = 340.0
 rect_min_size = Vector2( 600, 0 )
+custom_fonts/font = ExtResource( 1 )
 caret_blink = true
 caret_blink_speed = 0.5
 __meta__ = {
@@ -32,9 +33,9 @@ __meta__ = {
 }
 
 [node name="JoinLabel" type="Label" parent="."]
-margin_left = 198.856
-margin_top = 399.036
-margin_right = 378.856
+margin_left = 120.0
+margin_top = 400.0
+margin_right = 300.0
 margin_bottom = 430.036
 custom_fonts/font = ExtResource( 1 )
 text = "Room ID:"
@@ -44,11 +45,12 @@ __meta__ = {
 }
 
 [node name="RoomField" type="LineEdit" parent="."]
-margin_left = 394.713
-margin_top = 388.0
-margin_right = 844.713
-margin_bottom = 436.0
+margin_left = 330.0
+margin_top = 390.0
+margin_right = 850.0
+margin_bottom = 440.0
 rect_min_size = Vector2( 450, 0 )
+custom_fonts/font = ExtResource( 1 )
 caret_blink = true
 caret_blink_speed = 0.5
 __meta__ = {
@@ -56,10 +58,10 @@ __meta__ = {
 }
 
 [node name="JoinButton" type="Button" parent="."]
-margin_left = 865.288
-margin_top = 386.187
-margin_right = 995.288
-margin_bottom = 435.187
+margin_left = 860.0
+margin_top = 390.0
+margin_right = 1000.0
+margin_bottom = 440.0
 rect_min_size = Vector2( 130, 0 )
 custom_fonts/font = ExtResource( 1 )
 custom_colors/font_color_disabled = Color( 0, 0, 0, 1 )
@@ -69,22 +71,22 @@ __meta__ = {
 }
 
 [node name="JoinLabel2" type="Label" parent="."]
-margin_left = 293.687
-margin_top = 542.663
-margin_right = 643.687
-margin_bottom = 593.663
+margin_left = 330.0
+margin_top = 550.0
+margin_right = 600.0
+margin_bottom = 600.0
 custom_fonts/font = ExtResource( 1 )
 text = "Want to host a game?"
-align = 2
+valign = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="CreateButton" type="Button" parent="."]
-margin_left = 688.075
-margin_top = 534.316
-margin_right = 888.075
-margin_bottom = 597.316
+margin_left = 610.0
+margin_top = 550.0
+margin_right = 850.0
+margin_bottom = 600.0
 rect_min_size = Vector2( 200, 0 )
 custom_fonts/font = ExtResource( 1 )
 custom_colors/font_color_disabled = Color( 0, 0, 0, 1 )
@@ -94,10 +96,10 @@ __meta__ = {
 }
 
 [node name="Title" type="Label" parent="."]
-margin_left = 124.884
-margin_top = 83.3243
-margin_right = 978.884
-margin_bottom = 217.324
+margin_left = 120.0
+margin_top = 80.0
+margin_right = 1000.0
+margin_bottom = 200.0
 custom_fonts/font = ExtResource( 2 )
 text = "Angels of Delta"
 align = 1
